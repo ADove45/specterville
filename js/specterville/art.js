@@ -48,6 +48,28 @@ SV.ART = {
   'event-overdose': { t: 'Three in the Morning', p: 'A hospital waiting room at three in the morning, a man with his head in his hands, two stern elderly women stepping off an elevator, fluorescent light.' },
   'event-tv': { t: 'The News', p: 'A television in a dim hotel room showing a news broadcast outside a mansion, flashing camera lights, a drugged woman in a robe led down steps by a man.' },
 
+
+  /* ---------- Pictures for choices (the page turns to these when you pick an action) ----------
+     Key: act-<action id>. A picture for a reply to a dialogue choice is act-<action id>-c<number>, counting from 0.
+     If a choice picture is missing the game shows the action picture, and if that is missing, the place picture. */
+  'act-body': { t: 'Examine the body', p: 'A bed seen from the doorway through yellow police tape in noon light, a white sheet drawn up and dark hair spread across a pillow, a bedside lamp, the mood quiet and solemn.' },
+  'act-candle': { t: 'The purple candle', p: 'A close view of a large purple candle burned low beside a small white instruction card on a bedside table, soft gold light, wax dripping, a faint curl of smoke.' },
+  'act-room': { t: 'Search the room', p: 'A cheap feminine bedroom being searched, a dresser with perfume bottles and candles, a mirror, scattered clothing, police tape, perfume haze in warm light.' },
+  'act-ethan_apt': { t: 'Ethan in the doorway', p: 'A tall man in a ball cap and faded jeans stepping through a bedroom doorway into warm light, seen mostly from behind, a woman in a dark suit turning toward him in silhouette.' },
+  'act-ben': { t: 'The reference desk', p: 'A pale translucent young man with large glasses seated behind a library reference desk, fading at the edges, warm lamp light, rows of shelves behind him, seen in profile.' },
+  'act-katherine': { t: 'The woman in the aisle', p: 'A woman in her late thirties standing alone in a narrow library aisle between tall shelves, arms crossed, head bowed, seen from behind in soft gold light.' },
+  'act-charles': { t: 'The manager’s door', p: 'A cluttered library manager’s office door ajar, warm light spilling into a dim hallway, a tall man in silhouette in the doorway and a purple-haired translucent girl slipping past.' },
+  'act-computer': { t: 'Gwyneth’s computer', p: 'A library computer glowing in a dim corner, a web page of purple candles on the screen, a woman seated in silhouette from behind, a coffee mug beside the keyboard.' },
+  'act-ashley': { t: 'The waitress', p: 'A pale translucent young waitress in a pink diner uniform fading beside a booth, carrying a glass of water, warm neon glow, plastic menus on the table.' },
+  'act-ethan_diner': { t: 'Ethan joins you', p: 'Two people in a Southern diner booth seen from behind, a basket of bread rolls and two glasses of water on the table between them, a jukebox glowing in the corner.' },
+  'act-files': { t: 'The four case files', p: 'Four case files laid side by side on a meeting table in a small trailer, four ID photographs of dark-haired women partly visible, a takeout container, warm lamplight.' },
+  'act-kendra': { t: 'Tell Ethan about Kendra', p: 'A woman and a man seated at a trailer meeting table, heads bowed over open files, lamplight, the man’s hand resting near hers, both in silhouette.' },
+  'act-abfile': { t: 'Abigail’s file', p: 'A hand pulling a thin worn case folder from the bottom drawer of an old green filing cabinet, three yellowed pages, warm lamplight, trailer wood paneling.' },
+  'act-knock': { t: 'The knock at the door', p: 'A trailer sheriff’s office doorway crowded with two men in silhouette, a short stout man with thick glasses and a tall man in a suit, backlit by evening light, a woman at a desk holding a folder to her chest.' },
+  'act-mackenzie': { t: 'Mackenzie reads your hands', p: 'Two hands held palms-up in candlelight above a small table, a chakra chart open beside them, lavender sprigs, soft gold light, two women seated facing each other in silhouette.' },
+  'act-gwyn': { t: 'Gwyneth appears', p: 'A pale translucent young woman standing between candle shelves, the flames showing through her, a woman in a dark suit raising a wrist-worn device that glows faintly.' },
+  'act-night': { t: 'Ethan calls at nine', p: 'A hotel bedroom at night, a woman lying awake looking up at a stucco ceiling, a lamp, a phone glowing on the nightstand, a thick case file on the table.' },
+
   /* Endings */
   'ending-win': { pri: 1, t: 'Case Closed', p: 'An interrogation room just after a surge of pink-violet energy has faded, a toppled chair beside a metal table under a hanging lamp, a soft pink haze dissolving in the air, the stars of the Pleiades visible through a high window, silhouettes of paramedics at the doorway.' },
   'ending-lose': { t: 'Case Lost', p: 'A mansion bedroom with the lights out, a window open to the night, seven stars shining, one star dimming.' }

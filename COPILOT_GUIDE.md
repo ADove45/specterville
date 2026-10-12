@@ -36,3 +36,6 @@ Use the scene text only. The style is already set, so you don't need to paste th
 | It refuses | "Make it less graphic and more atmospheric. No people in the foreground." |
 
 Order to work in: the first batch at the top of PROMPTS.md (15 pictures), then the rest.
+
+## Pictures for choices
+Besides the page pictures, every action the player can take has its own picture (the page turns to it). Those prompts are in the second half of `PROMPTS.md`. Save them as `images/act-<name>.jpg`, for example `images/act-body.jpg`. If one is missing, the game simply shows the place picture.

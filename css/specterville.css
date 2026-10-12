@@ -115,3 +115,17 @@ button.clue:hover{border-color:var(--gold)}.clue.pick{border-color:var(--gold);b
 .door .cover{width:38%;max-width:11rem;height:auto;border:1px solid var(--gold);flex:none}
 .door .dtext{display:flex;flex-direction:column;gap:.4rem;min-width:0;text-align:left}
 .title .door .cta-row{justify-content:flex-start}
+
+/* the page turns when you make a choice */
+.page{overflow-x:hidden}
+.col.turn{position:relative;transform-origin:left center;animation:pageturn .8s cubic-bezier(.25,.7,.2,1) both}
+.col.turn::after{content:"";position:absolute;inset:0;pointer-events:none;background:linear-gradient(90deg,rgba(0,0,0,.7),rgba(0,0,0,0) 45%);animation:pageshade .8s ease-out both}
+@keyframes pageturn{0%{transform:perspective(1500px) rotateY(-78deg);opacity:.2}55%{opacity:1}100%{transform:perspective(1500px) rotateY(0);opacity:1}}
+@keyframes pageshade{from{opacity:1}to{opacity:0}}
+@media(prefers-reduced-motion:reduce){.col.turn{animation:none}.col.turn::after{display:none}}
+
+/* read-aloud settings */
+.voices{display:grid;gap:.6rem;grid-template-columns:1fr 1fr}
+.voices label{display:flex;flex-direction:column;gap:.2rem;font-size:.8rem;letter-spacing:.1em;text-transform:uppercase;color:var(--gold)}
+.voices select{font:inherit;font-size:.95rem;letter-spacing:0;text-transform:none;color:var(--fg);background:var(--panel);border:1px solid var(--line);padding:.45rem;min-height:2.6rem;max-width:100%}
+.voices .tool{grid-column:1/-1}

@@ -1,12 +1,12 @@
 # Specterville picture prompts
 
-37 pictures. Every prompt below is complete and stands on its own: copy the whole block into Copilot (or any image generator), one at a time, and save the result with the exact file name shown.
+54 pictures. Every prompt below is complete and stands on its own: copy the whole block into Copilot (or any image generator), one at a time, and save the result with the exact file name shown.
 
 Each prompt already includes the style, the "no text" rule and the "no recognizable faces" rule. You can also use the primer in `COPILOT_GUIDE.md` first to keep the whole set consistent.
 
 If Copilot refuses ("can't be generated due to Microsoft's code of conduct"), start a new chat, paste the primer again, and use gentler words: avoid "panic", "melting", "anger", "attack", "blood" and "violence". Describe the mood with light and posture instead.
 
-## First batch (15)
+## Pages: places, scenes, day cards, endings (15 first, then 22 more)
 
 ### 1. Specterville
 Save as: `images/title.jpg`
@@ -112,8 +112,6 @@ Save as: `images/ending-win.jpg`
 ```
 An interrogation room just after a surge of pink-violet energy has faded, a toppled chair beside a metal table under a hanging lamp, a soft pink haze dissolving in the air, the stars of the Pleiades visible through a high window, silhouettes of paramedics at the doorway. Dark painterly gothic illustration, oil-painting texture, deep umber and near-black shadows with warm gold highlights, candlelight and drifting mist, small-town Southern Georgia, cinematic wide 16:9 composition, no text, no lettering, no logos, and no recognizable faces (people only as silhouettes or seen from behind). Wide 16:9 landscape.
 ```
-
-## The rest (22)
 
 ### 16. Day One: The Candle
 Save as: `images/day-1.jpg`
@@ -267,4 +265,127 @@ Save as: `images/ending-lose.jpg`
 
 ```
 A mansion bedroom with the lights out, a window open to the night, seven stars shining, one star dimming. Dark painterly gothic illustration, oil-painting texture, deep umber and near-black shadows with warm gold highlights, candlelight and drifting mist, small-town Southern Georgia, cinematic wide 16:9 composition, no text, no lettering, no logos, and no recognizable faces (people only as silhouettes or seen from behind). Wide 16:9 landscape.
+```
+
+## Choice pictures: one for each action you can take (17 so far)
+
+The page turns to one of these when the player picks an action. If a file is missing, the game shows the place picture instead.
+
+### 38. Examine the body
+Save as: `images/act-body.jpg`
+
+```
+A bed seen from the doorway through yellow police tape in noon light, a white sheet drawn up and dark hair spread across a pillow, a bedside lamp, the mood quiet and solemn. Dark painterly gothic illustration, oil-painting texture, deep umber and near-black shadows with warm gold highlights, candlelight and drifting mist, small-town Southern Georgia, cinematic wide 16:9 composition, no text, no lettering, no logos, and no recognizable faces (people only as silhouettes or seen from behind). Wide 16:9 landscape.
+```
+
+### 39. The purple candle
+Save as: `images/act-candle.jpg`
+
+```
+A close view of a large purple candle burned low beside a small white instruction card on a bedside table, soft gold light, wax dripping, a faint curl of smoke. Dark painterly gothic illustration, oil-painting texture, deep umber and near-black shadows with warm gold highlights, candlelight and drifting mist, small-town Southern Georgia, cinematic wide 16:9 composition, no text, no lettering, no logos, and no recognizable faces (people only as silhouettes or seen from behind). Wide 16:9 landscape.
+```
+
+### 40. Search the room
+Save as: `images/act-room.jpg`
+
+```
+A cheap feminine bedroom being searched, a dresser with perfume bottles and candles, a mirror, scattered clothing, police tape, perfume haze in warm light. Dark painterly gothic illustration, oil-painting texture, deep umber and near-black shadows with warm gold highlights, candlelight and drifting mist, small-town Southern Georgia, cinematic wide 16:9 composition, no text, no lettering, no logos, and no recognizable faces (people only as silhouettes or seen from behind). Wide 16:9 landscape.
+```
+
+### 41. Ethan in the doorway
+Save as: `images/act-ethan_apt.jpg`
+
+```
+A tall man in a ball cap and faded jeans stepping through a bedroom doorway into warm light, seen mostly from behind, a woman in a dark suit turning toward him in silhouette. Dark painterly gothic illustration, oil-painting texture, deep umber and near-black shadows with warm gold highlights, candlelight and drifting mist, small-town Southern Georgia, cinematic wide 16:9 composition, no text, no lettering, no logos, and no recognizable faces (people only as silhouettes or seen from behind). Wide 16:9 landscape.
+```
+
+### 42. The reference desk
+Save as: `images/act-ben.jpg`
+
+```
+A pale translucent young man with large glasses seated behind a library reference desk, fading at the edges, warm lamp light, rows of shelves behind him, seen in profile. Dark painterly gothic illustration, oil-painting texture, deep umber and near-black shadows with warm gold highlights, candlelight and drifting mist, small-town Southern Georgia, cinematic wide 16:9 composition, no text, no lettering, no logos, and no recognizable faces (people only as silhouettes or seen from behind). Wide 16:9 landscape.
+```
+
+### 43. The woman in the aisle
+Save as: `images/act-katherine.jpg`
+
+```
+A woman in her late thirties standing alone in a narrow library aisle between tall shelves, arms crossed, head bowed, seen from behind in soft gold light. Dark painterly gothic illustration, oil-painting texture, deep umber and near-black shadows with warm gold highlights, candlelight and drifting mist, small-town Southern Georgia, cinematic wide 16:9 composition, no text, no lettering, no logos, and no recognizable faces (people only as silhouettes or seen from behind). Wide 16:9 landscape.
+```
+
+### 44. The manager’s door
+Save as: `images/act-charles.jpg`
+
+```
+A cluttered library manager’s office door ajar, warm light spilling into a dim hallway, a tall man in silhouette in the doorway and a purple-haired translucent girl slipping past. Dark painterly gothic illustration, oil-painting texture, deep umber and near-black shadows with warm gold highlights, candlelight and drifting mist, small-town Southern Georgia, cinematic wide 16:9 composition, no text, no lettering, no logos, and no recognizable faces (people only as silhouettes or seen from behind). Wide 16:9 landscape.
+```
+
+### 45. Gwyneth’s computer
+Save as: `images/act-computer.jpg`
+
+```
+A library computer glowing in a dim corner, a web page of purple candles on the screen, a woman seated in silhouette from behind, a coffee mug beside the keyboard. Dark painterly gothic illustration, oil-painting texture, deep umber and near-black shadows with warm gold highlights, candlelight and drifting mist, small-town Southern Georgia, cinematic wide 16:9 composition, no text, no lettering, no logos, and no recognizable faces (people only as silhouettes or seen from behind). Wide 16:9 landscape.
+```
+
+### 46. The waitress
+Save as: `images/act-ashley.jpg`
+
+```
+A pale translucent young waitress in a pink diner uniform fading beside a booth, carrying a glass of water, warm neon glow, plastic menus on the table. Dark painterly gothic illustration, oil-painting texture, deep umber and near-black shadows with warm gold highlights, candlelight and drifting mist, small-town Southern Georgia, cinematic wide 16:9 composition, no text, no lettering, no logos, and no recognizable faces (people only as silhouettes or seen from behind). Wide 16:9 landscape.
+```
+
+### 47. Ethan joins you
+Save as: `images/act-ethan_diner.jpg`
+
+```
+Two people in a Southern diner booth seen from behind, a basket of bread rolls and two glasses of water on the table between them, a jukebox glowing in the corner. Dark painterly gothic illustration, oil-painting texture, deep umber and near-black shadows with warm gold highlights, candlelight and drifting mist, small-town Southern Georgia, cinematic wide 16:9 composition, no text, no lettering, no logos, and no recognizable faces (people only as silhouettes or seen from behind). Wide 16:9 landscape.
+```
+
+### 48. The four case files
+Save as: `images/act-files.jpg`
+
+```
+Four case files laid side by side on a meeting table in a small trailer, four ID photographs of dark-haired women partly visible, a takeout container, warm lamplight. Dark painterly gothic illustration, oil-painting texture, deep umber and near-black shadows with warm gold highlights, candlelight and drifting mist, small-town Southern Georgia, cinematic wide 16:9 composition, no text, no lettering, no logos, and no recognizable faces (people only as silhouettes or seen from behind). Wide 16:9 landscape.
+```
+
+### 49. Tell Ethan about Kendra
+Save as: `images/act-kendra.jpg`
+
+```
+A woman and a man seated at a trailer meeting table, heads bowed over open files, lamplight, the man’s hand resting near hers, both in silhouette. Dark painterly gothic illustration, oil-painting texture, deep umber and near-black shadows with warm gold highlights, candlelight and drifting mist, small-town Southern Georgia, cinematic wide 16:9 composition, no text, no lettering, no logos, and no recognizable faces (people only as silhouettes or seen from behind). Wide 16:9 landscape.
+```
+
+### 50. Abigail’s file
+Save as: `images/act-abfile.jpg`
+
+```
+A hand pulling a thin worn case folder from the bottom drawer of an old green filing cabinet, three yellowed pages, warm lamplight, trailer wood paneling. Dark painterly gothic illustration, oil-painting texture, deep umber and near-black shadows with warm gold highlights, candlelight and drifting mist, small-town Southern Georgia, cinematic wide 16:9 composition, no text, no lettering, no logos, and no recognizable faces (people only as silhouettes or seen from behind). Wide 16:9 landscape.
+```
+
+### 51. The knock at the door
+Save as: `images/act-knock.jpg`
+
+```
+A trailer sheriff’s office doorway crowded with two men in silhouette, a short stout man with thick glasses and a tall man in a suit, backlit by evening light, a woman at a desk holding a folder to her chest. Dark painterly gothic illustration, oil-painting texture, deep umber and near-black shadows with warm gold highlights, candlelight and drifting mist, small-town Southern Georgia, cinematic wide 16:9 composition, no text, no lettering, no logos, and no recognizable faces (people only as silhouettes or seen from behind). Wide 16:9 landscape.
+```
+
+### 52. Mackenzie reads your hands
+Save as: `images/act-mackenzie.jpg`
+
+```
+Two hands held palms-up in candlelight above a small table, a chakra chart open beside them, lavender sprigs, soft gold light, two women seated facing each other in silhouette. Dark painterly gothic illustration, oil-painting texture, deep umber and near-black shadows with warm gold highlights, candlelight and drifting mist, small-town Southern Georgia, cinematic wide 16:9 composition, no text, no lettering, no logos, and no recognizable faces (people only as silhouettes or seen from behind). Wide 16:9 landscape.
+```
+
+### 53. Gwyneth appears
+Save as: `images/act-gwyn.jpg`
+
+```
+A pale translucent young woman standing between candle shelves, the flames showing through her, a woman in a dark suit raising a wrist-worn device that glows faintly. Dark painterly gothic illustration, oil-painting texture, deep umber and near-black shadows with warm gold highlights, candlelight and drifting mist, small-town Southern Georgia, cinematic wide 16:9 composition, no text, no lettering, no logos, and no recognizable faces (people only as silhouettes or seen from behind). Wide 16:9 landscape.
+```
+
+### 54. Ethan calls at nine
+Save as: `images/act-night.jpg`
+
+```
+A hotel bedroom at night, a woman lying awake looking up at a stucco ceiling, a lamp, a phone glowing on the nightstand, a thick case file on the table. Dark painterly gothic illustration, oil-painting texture, deep umber and near-black shadows with warm gold highlights, candlelight and drifting mist, small-town Southern Georgia, cinematic wide 16:9 composition, no text, no lettering, no logos, and no recognizable faces (people only as silhouettes or seen from behind). Wide 16:9 landscape.
 ```

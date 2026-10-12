@@ -6,6 +6,10 @@ Case One, *The Seven Sisters* (Book One), is playable: seven days in Specter, Ge
 
 Open `index.html` in any modern browser. No build step. Progress saves in the browser.
 
+## Features
+- **Pictures:** every page and every choice can have its own picture. The page turns when you pick something. See `PROMPTS.md` and `COPILOT_GUIDE.md`.
+- **Listen:** a Listen button reads each page aloud using the voices on the player's own device. Voices and speed are in the Case Board.
+
 ## Files
 - `index.html` - the page
 - `js/specterville/data.js` - shared content: people, clues, theories, suspects, map positions

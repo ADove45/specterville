@@ -135,5 +135,22 @@ SV.POS = {
   trailer: [6, 90], church: [36, 88], cemetery: [58, 90], mansion: [78, 86], prison: [94, 92], jail: [40, 50]
 };
 
+
+/* ---------- Voices for read-aloud (the player's own device voices are used; these set gender, pitch and speed) ---------- */
+SV.VOICES = {
+  audra: { g: 'f', rank: 0, pitch: 1.0, rate: 1.0, aud: true },
+  ethan: { g: 'm', rank: 0, pitch: 0.9, rate: 0.98 }, cordero: { g: 'm', rank: 1, pitch: 0.82, rate: 0.94 }, miller: { g: 'm', rank: 1, pitch: 0.7, rate: 0.85 },
+  benjamin: { g: 'm', rank: 1, pitch: 0.75, rate: 0.9 }, charles: { g: 'm', rank: 1, pitch: 0.85, rate: 0.96 }, mayor: { g: 'm', rank: 2, pitch: 0.8, rate: 1.05 },
+  brendon: { g: 'm', rank: 3, pitch: 0.95, rate: 0.97 }, drshelley: { g: 'm', rank: 2, pitch: 0.9, rate: 0.95 }, kenneth: { g: 'm', rank: 2, pitch: 0.75, rate: 0.85 },
+  joshua: { g: 'm', rank: 2, pitch: 1.0, rate: 1.0 }, eric: { g: 'm', rank: 3, pitch: 0.92, rate: 1.0 }, thomas: { g: 'm', rank: 4, pitch: 1.05, rate: 1.05 },
+  delluca: { g: 'm', rank: 4, pitch: 0.8, rate: 0.95 }, marcus: { g: 'm', rank: 2, pitch: 0.78, rate: 0.9 }, raj: { g: 'm', rank: 3, pitch: 0.95, rate: 0.9 },
+  stockard: { g: 'm', rank: 1, pitch: 0.78, rate: 0.88 }, hawthorne: { g: 'm', rank: 4, pitch: 0.9, rate: 0.92 }, eli: { g: 'm', rank: 1, pitch: 0.7, rate: 0.9 },
+  katherine: { g: 'f', rank: 2, pitch: 1.05, rate: 0.98 }, ashley: { g: 'f', rank: 2, pitch: 0.85, rate: 0.88 }, mackenzie: { g: 'f', rank: 1, pitch: 0.95, rate: 0.93 },
+  gwyn: { g: 'f', rank: 1, pitch: 0.72, rate: 0.8 }, yolanda: { g: 'f', rank: 3, pitch: 1.05, rate: 1.05 }, renee: { g: 'f', rank: 2, pitch: 0.92, rate: 0.92 },
+  principal: { g: 'f', rank: 2, pitch: 0.8, rate: 0.88 }, margret: { g: 'f', rank: 3, pitch: 1.0, rate: 0.95 }, magic: { g: 'f', rank: 3, pitch: 0.85, rate: 1.0 },
+  tammy: { g: 'f', rank: 4, pitch: 1.1, rate: 1.0 }, amanda: { g: 'f', rank: 4, pitch: 1.15, rate: 1.0 }, mrs: { g: 'f', rank: 3, pitch: 0.9, rate: 0.9 },
+  pierce: { g: 'f', rank: 4, pitch: 1.0, rate: 1.05 }, reporter: { g: 'f', rank: 4, pitch: 0.95, rate: 1.0 }
+};
+
 /* ---------- Words the engine shows ---------- */
 SV.FLARE = 'Your specter shield flares at your wrist. The figure comes no closer, and its voice breaks into static. You will not get an honest word out of it while the shield is on.';

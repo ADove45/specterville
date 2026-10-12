@@ -3,7 +3,7 @@
 (function () {
   var D = window.SV, SAVE = 'specterville-v2', BOOK_URL = 'https://www.amazon.com/dp/B09CLJ7HBB';
   var $ = function (id) { return document.getElementById(id); };
-  var view = $('view'), st = { v: 'title', s: null, shown: null, ev: null, evStage: 0, acc: null, endPage: 0, board: { pick: [] } };
+  var view = $('view'), st = { raw: '', listen: false, turn: false, v: 'title', s: null, shown: null, ev: null, evStage: 0, acc: null, endPage: 0, board: { pick: [] } };
 
   var esc = function (t) { return String(t).replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;'); };
   var fmt = function (t) { return esc(t).replace(/\*([^*]+)\*/g, '<em>$1</em>'); };
@@ -32,12 +32,57 @@
   window.SVimg = function (img) {
     var exts = ['.jpg', '.png', '.webp'], i = +(img.getAttribute('data-i') || 0) + 1;
     if (i < exts.length) { img.setAttribute('data-i', i); img.src = img.getAttribute('data-base') + exts[i]; return; }
+    var fbs = (img.getAttribute('data-fb') || '').split('|').filter(Boolean);
+    if (fbs.length) { var k = fbs.shift(); img.setAttribute('data-fb', fbs.join('|')); img.setAttribute('data-base', 'images/' + k); img.setAttribute('data-i', 0); img.src = 'images/' + k + '.jpg'; return; }
     var box = img.parentNode; img.remove(); if (box && !D.PLACEHOLDERS) box.remove();
   };
-  function art(key) {
-    var a = D.ART && D.ART[key]; if (!a) return '';
-    return '<div class="media">' + (D.PLACEHOLDERS ? '<div class="ph"><span class="k">Picture to add</span><span class="t">' + esc(a.t) + '</span><span class="f">images/' + esc(key) + '.jpg</span></div>' : '') +
-      '<img src="images/' + key + '.jpg" data-base="images/' + key + '" data-i="0" alt="' + esc(a.t) + '" onerror="SVimg(this)"></div>';
+  /* art(key) or art([key, fallback, ...]): the first listed picture that exists is shown. Only keys listed in SV.ART are tried. */
+  function art(keys) {
+    keys = [].concat(keys).filter(function (k) { return D.ART && D.ART[k]; }); if (!keys.length) return '';
+    var k0 = keys[0], a = D.ART[k0];
+    return '<div class="media">' + (D.PLACEHOLDERS ? '<div class="ph"><span class="k">Picture to add</span><span class="t">' + esc(a.t) + '</span><span class="f">images/' + esc(k0) + '.jpg</span></div>' : '') +
+      '<img src="images/' + k0 + '.jpg" data-base="images/' + k0 + '" data-i="0" data-fb="' + keys.slice(1).join('|') + '" alt="' + esc(a.t) + '" onerror="SVimg(this)"></div>';
+  }
+
+  /* ---------- Read aloud, using the voices on the player's own device ---------- */
+  var TTS = !!(window.ASAudio && ASAudio.hasVoices && ASAudio.hasVoices());
+  var NARR = { narr: true, g: 'f', rank: 1, pitch: 0.9, rate: 0.94 };
+  try { st.listen = localStorage.getItem('specterville-listen') === '1'; } catch (e) {}
+  function speakItems(raw) { // narrator reads the story; quoted lines are read in that character's voice
+    var out = [];
+    String(raw || '').split(/\n\n+/).forEach(function (p) {
+      p = p.trim(); if (!p) return;
+      var m = p.match(/^@(\w+)\s+([\s\S]*)$/), cur = m ? m[1] : (/^\u201c/.test(p) ? 'audra' : null), txt = m ? m[2] : p;
+      txt.split(/(@\w+\s|\u201c[^\u201d]*\u201d)/).forEach(function (seg) {
+        if (!seg) return; var tag = seg.match(/^@(\w+)\s$/);
+        if (tag) { cur = tag[1]; return; }
+        if (/^\u201c/.test(seg)) { out.push({ text: seg.replace(/[\u201c\u201d]/g, ''), who: D.VOICES[cur || 'audra'] || D.VOICES.audra }); return; }
+        if (/[A-Za-z0-9]/.test(seg)) out.push({ text: seg, who: NARR });
+      });
+    });
+    return out;
+  }
+  function say(raw) { // remember the page text; read it if Listen is on
+    st.raw = raw || ''; if (!TTS) return;
+    try { ASAudio.stopSpeech(); if (st.listen && st.raw) ASAudio.speakSeq(speakItems(st.raw)); } catch (e) {} // a speech problem must never stop the game
+  }
+  function stopSay() { try { if (TTS) ASAudio.stopSpeech(); } catch (e) {} }
+  function toggleListen() {
+    st.listen = !st.listen; try { localStorage.setItem('specterville-listen', st.listen ? '1' : '0'); } catch (e) {}
+    bar(); if (st.listen) say(st.raw); else stopSay();
+  }
+  function voiceHtml() {
+    if (!TTS) return '';
+    var pr = ASAudio.pref(), opt = function (list, cur) { return '<option value="">Automatic</option>' + list.map(function (v) { return '<option value="' + esc(v.name) + '"' + (v.name === cur ? ' selected' : '') + '>' + esc(v.name) + '</option>'; }).join(''); };
+    var all = ASAudio.voices(), f = ASAudio.voices('f'), m = ASAudio.voices('m');
+    if (!all.length) return '<p class="sub">Voice</p><p class="hint">This device has no English voices to read with.</p>';
+    return '<p class="sub">Read-aloud voices</p><p class="hint">Uses the voices on your own device. Tap Listen at the top to turn reading on.</p>' +
+      '<div class="voices"><label>Narrator<select data-pref="narr">' + opt(all, pr.narr) + '</select></label>' +
+      '<label>Audra<select data-pref="aud">' + opt(f, pr.aud) + '</select></label>' +
+      '<label>Women<select data-pref="f">' + opt(f, pr.f) + '</select></label>' +
+      '<label>Men<select data-pref="m">' + opt(m, pr.m) + '</select></label>' +
+      '<label>Speed<select data-pref="rate">' + [0.8, 0.9, 1.0, 1.1, 1.25, 1.5].map(function (r) { return '<option value="' + r + '"' + (Math.abs(+pr.rate - r) < 0.01 ? ' selected' : '') + '>' + r + 'x</option>'; }).join('') + '</select></label>' +
+      '<button class="tool" type="button" data-do="voice-test">Test the voices</button></div>';
   }
 
   function body(text) {
@@ -62,7 +107,7 @@
 
   function travel(to) {
     if (to === st.s.loc || !open(to)) return;
-    st.s.slot += 1; st.s.loc = to; st.s.visited[to] = 1; st.shown = null;
+    st.s.slot += 1; st.s.loc = to; st.s.visited[to] = 1; st.shown = null; st.turn = true; stopSay();
     unlockCheck();
     if (st.s.slot >= day().slots.length) { st.s.ending = true; }
     save(); proceed();
@@ -70,9 +115,9 @@
 
   /* ---------- days, events ---------- */
   function startDay(i) {
-    var s = st.s; s.day = i; s.slot = 0; s.loc = D.DAYS[i].start; s.visited = {}; s.visited[s.loc] = 1; s.ending = false; s.pendingEv = null; st.shown = null;
+    var s = st.s; s.day = i; s.slot = 0; s.loc = D.DAYS[i].start; s.visited = {}; s.visited[s.loc] = 1; s.ending = false; s.pendingEv = null; st.shown = null; st.turn = true;
     var copy = clone(s); delete copy.snap; s.snap = JSON.stringify(copy);
-    unlockCheck(); save(); st.v = 'dayintro'; render();
+    unlockCheck(); save(); st.v = 'dayintro'; say(D.DAYS[i].intro); render();
   }
   function nextEvent() {
     var s = st.s, evs = day().events || [];
@@ -85,7 +130,7 @@
     return null;
   }
   function showEvent(e, replay) {
-    var s = st.s; st.ev = e; st.evStage = s.picks['ev:' + e.id] != null ? 1 : 0; st.v = 'event';
+    var s = st.s; st.turn = true; st.ev = e; st.evStage = s.picks['ev:' + e.id] != null ? 1 : 0; st.v = 'event';
     if (!replay) {
       s.evDone[e.id] = 1; s.pendingEv = e.id;
       if (e.loc && places()[e.loc]) { s.loc = e.loc; s.visited[e.loc] = 1; }
@@ -93,20 +138,21 @@
       [].concat(e.clue || []).forEach(function (c) { addClue(s, c); });
       unlockCheck(); save();
     }
+    say(val(e.text, s));
     render();
   }
   function proceed() {
     var e = nextEvent();
     if (e) return showEvent(e);
     if (st.s.ending) return finishDay();
-    st.v = 'place'; render();
+    st.v = 'place'; say(places()[st.s.loc].blurb); render();
   }
   function finishDay() {
     var s = st.s; s.ending = false;
     if (st.s.day >= LAST) { s.final = true; save(); return startAccuse(); }
     st.v = day().night ? 'night' : 'next'; save();
     if (st.v === 'next') return startDay(s.day + 1);
-    render();
+    say(day().night); render();
   }
 
   /* ---------- actions ---------- */
@@ -114,32 +160,35 @@
   function runAction(pid, aid) {
     var s = st.s, a = findAction(pid, aid); if (!a) return;
     var why = a.lock && a.lock(s);
-    if (why) { st.shown = { title: a.label, html: '<p class="locked">' + esc(why) + '</p>' }; return render(); }
+    if (why) { st.shown = { title: a.label, html: '<p class="locked">' + esc(why) + '</p>' }; say(why); return render(); }
     if (a.specter && s.shield) {
       if (!s.done['flare_' + aid]) { s.done['flare_' + aid] = 1; s.trust.specters -= 1; }
-      st.shown = { title: a.label, html: '<p class="flare">' + esc(D.FLARE) + '</p>', hint: true }; save(); return render();
+      st.shown = { title: a.label, html: '<p class="flare">' + esc(D.FLARE) + '</p>', hint: true }; say(D.FLARE); save(); return render();
     }
     var first = !s.done[aid]; s.done[aid] = 1;
     if (first) { if (a.fx) a.fx(s, api); [].concat(a.clue || []).forEach(function (c) { addClue(s, c); }); }
     var html = body(val(a.text, s));
+    st.turn = true;
+    say(val(a.text, s) + (a.choices && s.picks[aid] != null ? '\n\n' + a.choices[s.picks[aid]].reply : ''));
     if (a.choices && s.picks[aid] == null) st.shown = { title: a.label, html: html, choices: a.choices, aid: aid };
     else {
       if (a.choices) html += '<div class="reply">' + body(a.choices[s.picks[aid]].reply) + '</div>';
-      st.shown = { title: a.label, html: html, accuse: !!a.accuse };
+      st.shown = { title: a.label, html: html, accuse: !!a.accuse, aid: aid, ci: a.choices ? s.picks[aid] : null };
     }
     unlockCheck(); save(); render();
   }
   function choose(pid, aid, i) {
     var s = st.s, a = findAction(pid, aid), c = a.choices[i];
     s.picks[aid] = i; if (c.fx) c.fx(s, api);
-    st.shown = { title: a.label, html: body(val(a.text, s)) + '<div class="reply">' + body(c.reply) + '</div>' };
+    st.turn = true; say(c.reply);
+    st.shown = { title: a.label, html: body(val(a.text, s)) + '<div class="reply">' + body(c.reply) + '</div>', aid: aid, ci: i };
     unlockCheck(); save(); render();
   }
   function chooseEvent(i) {
-    var s = st.s, e = st.ev, c = e.choices[i]; s.picks['ev:' + e.id] = i; if (c.fx) c.fx(s, api); st.evStage = 1; save(); render();
+    var s = st.s, e = st.ev, c = e.choices[i]; s.picks['ev:' + e.id] = i; if (c.fx) c.fx(s, api); st.evStage = 1; st.turn = true; say(c.reply + (e.after ? '\n\n' + e.after : '')); save(); render();
   }
   function continueEvent() {
-    var s = st.s; s.pendingEv = null; save(); proceed();
+    var s = st.s; s.pendingEv = null; st.turn = true; save(); proceed();
   }
 
   /* ---------- Case Board ---------- */
@@ -170,6 +219,7 @@
     h += '<p class="sub">Theories <span>' + count(s.theories) + ' / ' + D.THEORIES.length + '</span></p><ul class="theories">' + D.THEORIES.map(function (t) {
       return s.theories[t.id] ? '<li class="got"><span class="n">' + esc(t.title) + '</span><span class="t">' + esc(t.text) + '</span></li>' : '<li class="dim"><span class="n">? ? ?</span></li>';
     }).join('') + '</ul>';
+    h += voiceHtml();
     h += '<p class="sub">Trust</p><div class="trust">' + [['ethan', 'Ethan'], ['cordero', 'Cordero'], ['specters', 'The Specters'], ['town', 'The Town']].map(function (x) {
       var v = Math.max(-3, Math.min(3, s.trust[x[0]] || 0)); return '<div><span>' + x[1] + '</span><i><b style="left:' + ((v + 3) / 6 * 100) + '%"></b></i></div>';
     }).join('') + '</div>';
@@ -181,11 +231,12 @@
   function startAccuse() { st.acc = { step: 'suspect', suspect: null, picks: [], msg: '' }; st.v = 'accuse'; render(); }
   function evaluateAccusation() {
     var s = st.s, a = st.acc, sus = D.SUSPECTS.filter(function (x) { return x.id === a.suspect; })[0], keys = a.picks.filter(function (c) { return D.KEY.indexOf(c) >= 0; }).length;
-    if (sus.truth && keys >= 2) { s.ended = 'win'; s.final = false; st.endPage = 0; st.v = 'ending'; save(); return render(); }
+    if (sus.truth && keys >= 2) { s.ended = 'win'; s.final = false; st.endPage = 0; st.v = 'ending'; save(); sayEnding(); return render(); }
     s.wrong += 1; save();
-    if (s.wrong >= 2) { s.ended = 'lose'; st.endPage = 0; st.v = 'ending'; save(); return render(); }
-    a.step = 'result'; a.result = sus.truth ? D.ENDING.weak : sus.why; a.resultTitle = sus.truth ? 'Right name, not enough proof' : 'The wrong name'; render();
+    if (s.wrong >= 2) { s.ended = 'lose'; st.endPage = 0; st.v = 'ending'; save(); sayEnding(); return render(); }
+    a.step = 'result'; a.result = sus.truth ? D.ENDING.weak : sus.why; a.resultTitle = sus.truth ? 'Right name, not enough proof' : 'The wrong name'; say(a.result); render();
   }
+  function sayEnding() { var s = st.s, p = D.ENDING[s.ended][st.endPage]; say(val(p.text, s)); }
   function accuseView() {
     var s = st.s, a = st.acc, h;
     if (a.step === 'suspect') {
@@ -243,6 +294,7 @@
     $('clock').textContent = playing ? clockText() : '';
     var sh = $('btn-shield'); sh.hidden = !playing; sh.textContent = 'Shield: ' + (s && s.shield ? 'On' : 'Off'); sh.classList.toggle('on', !!(s && s.shield));
     $('btn-board').hidden = !playing; $('btn-menu').hidden = st.v === 'title';
+    var lb = $('btn-listen'); if (lb) { lb.hidden = !TTS || !playing; lb.textContent = 'Listen: ' + (st.listen ? 'On' : 'Off'); lb.classList.toggle('on', st.listen); lb.setAttribute('aria-pressed', st.listen ? 'true' : 'false'); }
   }
 
   function titleView() {
@@ -257,7 +309,7 @@
   }
   function dayIntroView() {
     var d = day();
-    view.innerHTML = '<div class="col fade title">' + art('day-' + (st.s.day + 1)) + '<p class="eyebrow">Day ' + (st.s.day + 1) + ' of ' + D.DAYS.length + ' · ' + esc(d.label) + '</p><h1 class="logo small">' + esc(d.title) + '</h1><div class="scene left">' + body(d.intro) + '</div><div class="cta-row"><button class="cta" type="button" data-do="begin">Begin the day</button></div></div>';
+    view.innerHTML = '<div class="col ' + turnClass() + ' title">' + art('day-' + (st.s.day + 1)) + '<p class="eyebrow">Day ' + (st.s.day + 1) + ' of ' + D.DAYS.length + ' · ' + esc(d.label) + '</p><h1 class="logo small">' + esc(d.title) + '</h1><div class="scene left">' + body(d.intro) + '</div><div class="cta-row"><button class="cta" type="button" data-do="begin">Begin the day</button></div></div>';
   }
   function nightView() {
     var d = day();
@@ -266,7 +318,7 @@
       '<div class="cta-row"><button class="cta" type="button" data-do="nextday">On to Day ' + (st.s.day + 2) + '</button><button class="cta ghost" type="button" data-do="board">Open the Case Board</button></div></div>';
   }
   function eventView() {
-    var e = st.ev, s = st.s, ch = e.choices, h = '<div class="col fade">' + art('event-' + e.id) + '<div class="eyebrow"><span>' + clockText() + '</span><span class="pov">Scene</span></div><h1 class="scene-title">' + esc(e.title) + '</h1><div class="scene">' + body(val(e.text, s));
+    var e = st.ev, s = st.s, ch = e.choices, h = '<div class="col ' + turnClass() + '">' + art('event-' + e.id) + '<div class="eyebrow"><span>' + clockText() + '</span><span class="pov">Scene</span></div><h1 class="scene-title">' + esc(e.title) + '</h1><div class="scene">' + body(val(e.text, s));
     if (ch && st.evStage === 0) h += '</div><div class="choices">' + ch.map(function (c, i) { return '<button class="choice" type="button" data-evpick="' + i + '">' + fmt(c.label) + '</button>'; }).join('') + '</div></div>';
     else {
       if (ch) h += '<div class="reply">' + body(ch[s.picks['ev:' + e.id]].reply) + '</div>';
@@ -287,8 +339,10 @@
       '<div class="cta-row"><button class="cta" type="button" data-do="place">Back to ' + esc(places()[s.loc].name) + '</button></div></div>';
   }
 
+  function turnClass() { var t = st.turn; st.turn = false; return t ? 'turn' : 'fade'; }
   function placeView() {
-    var s = st.s, pid = s.loc, p = places()[pid], sh = st.shown;
+    var s = st.s, pid = s.loc, p = places()[pid], sh = st.shown, base = p.img || pid, pic = base;
+    if (sh && sh.aid) pic = sh.ci != null ? ['act-' + sh.aid + '-c' + sh.ci, 'act-' + sh.aid, base] : ['act-' + sh.aid, base];
     var acts = p.actions.filter(function (a) { return !a.show || a.show(s); }).map(function (a) {
       var locked = a.lock && a.lock(s), done = s.done[a.id];
       return '<button class="act' + (done ? ' done' : '') + (locked ? ' lk' : '') + (a.specter ? ' spec' : '') + '" type="button" data-act="' + a.id + '">' + (a.specter ? '<em class="tagline">specter</em>' : '') + esc(a.label) + (done ? '<span class="chk">seen</span>' : '') + '</button>';
@@ -301,7 +355,7 @@
       if (sh.choices) scene += '<div class="choices">' + sh.choices.map(function (c, i) { return '<button class="choice" type="button" data-pick="' + i + '">' + fmt(c.label) + '</button>'; }).join('') + '</div>';
       scene += '</div>';
     }
-    view.innerHTML = '<div class="col fade">' + art(p.img || pid) + '<div class="eyebrow"><span>' + esc(clockText()) + '</span><span class="pov">Audra</span></div>' +
+    view.innerHTML = '<div class="col ' + turnClass() + '">' + art(pic) + '<div class="eyebrow"><span>' + esc(clockText()) + '</span><span class="pov">Audra</span></div>' +
       '<h1 class="scene-title">' + esc(p.name) + '</h1><p class="blurb">' + fmt(p.blurb) + '</p>' + scene +
       '<p class="sub">What do you do?</p><div class="acts">' + acts + '</div>' +
       '<div class="cta-row"><button class="cta" type="button" data-do="map">Leave. Open the map</button></div></div>';
@@ -321,7 +375,7 @@
   function startNew() { wipe(); st.s = fresh(); st.shown = null; startDay(0); }
   function resume() {
     st.s = load(); var s = st.s; st.shown = null;
-    if (s.ended) { st.endPage = 0; st.v = 'ending'; return render(); }
+    if (s.ended) { st.endPage = 0; st.v = 'ending'; sayEnding(); return render(); }
     if (s.final) return startAccuse();
     if (s.pendingEv) { var e = (day().events || []).filter(function (x) { return x.id === s.pendingEv; })[0]; if (e) return showEvent(e, true); }
     st.v = 'place'; render();
@@ -338,7 +392,8 @@
       sus = t.getAttribute('data-sus'), ev = t.getAttribute('data-ev'), ep = t.getAttribute('data-evpick');
     if (t.id === 'btn-shield') return toggleShield();
     if (t.id === 'btn-board') return renderBoard();
-    if (t.id === 'btn-menu') { st.v = 'title'; closeBoard(); return render(); }
+    if (t.id === 'btn-menu') { st.v = 'title'; closeBoard(); stopSay(); return render(); }
+    if (t.id === 'btn-listen') return toggleListen();
     if (cl) return pickClue(cl);
     if (g) return travel(g);
     if (a) return runAction(st.s.loc, a);
@@ -360,8 +415,13 @@
     if (d === 'accuse') return startAccuse();
     if (d === 'accuse-go') return evaluateAccusation();
     if (d === 'accuse-back') { st.acc = { step: 'suspect', suspect: null, picks: [] }; return render(); }
-    if (d === 'next-page') { st.endPage += 1; return render(); }
+    if (d === 'next-page') { st.endPage += 1; sayEnding(); return render(); }
     if (d === 'retry') return retry();
+    if (d === 'voice-test') { if (TTS) try { ASAudio.speakSeq(speakItems('The air conditioner is off, and the Georgia heat sits on everything.\n\n@ethan “Hey, Audra. Wait up.”')); } catch (e) {} return; }
+  });
+  document.addEventListener('change', function (e) {
+    var t = e.target, k = t && t.getAttribute && t.getAttribute('data-pref'); if (!k || !TTS) return;
+    ASAudio.setPref(k, k === 'rate' ? +t.value : t.value);
   });
   document.addEventListener('keydown', function (e) { if (e.key === 'Escape' && !$('panel').hidden) closeBoard(); });
 
