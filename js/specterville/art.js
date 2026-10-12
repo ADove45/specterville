@@ -49,6 +49,6 @@ SV.ART = {
   'event-tv': { t: 'The News', p: 'A television in a dim hotel room showing a news broadcast outside a mansion, flashing camera lights, a drugged woman in a robe led down steps by a man.' },
 
   /* Endings */
-  'ending-win': { pri: 1, t: 'Case Closed', p: 'An interrogation room after a storm of energy, a toppled chair, a small old woman lying still, paramedics rushing in, a glowing pink haze fading, stars of the Pleiades in a window.' },
+  'ending-win': { pri: 1, t: 'Case Closed', p: 'An interrogation room just after a surge of pink-violet energy has faded, a toppled chair beside a metal table under a hanging lamp, a soft pink haze dissolving in the air, the stars of the Pleiades visible through a high window, silhouettes of paramedics at the doorway.' },
   'ending-lose': { t: 'Case Lost', p: 'A mansion bedroom with the lights out, a window open to the night, seven stars shining, one star dimming.' }
 };

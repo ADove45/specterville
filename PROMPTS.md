@@ -110,7 +110,7 @@ A grand mansion foyer with an antebellum staircase, a woman in a black dress ope
 Save as: `images/ending-win.jpg`
 
 ```
-An interrogation room after a storm of energy, a toppled chair, a small old woman lying still, paramedics rushing in, a glowing pink haze fading, stars of the Pleiades in a window. Dark painterly gothic illustration, oil-painting texture, deep umber and near-black shadows with warm gold highlights, candlelight and drifting mist, small-town Southern Georgia, cinematic wide 16:9 composition, no text, no lettering, no logos, and no recognizable faces (people only as silhouettes or seen from behind). Wide 16:9 landscape.
+An interrogation room just after a surge of pink-violet energy has faded, a toppled chair beside a metal table under a hanging lamp, a soft pink haze dissolving in the air, the stars of the Pleiades visible through a high window, silhouettes of paramedics at the doorway. Dark painterly gothic illustration, oil-painting texture, deep umber and near-black shadows with warm gold highlights, candlelight and drifting mist, small-town Southern Georgia, cinematic wide 16:9 composition, no text, no lettering, no logos, and no recognizable faces (people only as silhouettes or seen from behind). Wide 16:9 landscape.
 ```
 
 ## The rest (22)
