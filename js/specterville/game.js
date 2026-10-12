@@ -28,6 +28,18 @@
   function chime() { try { if (window.ASAudio && ASAudio.sting) ASAudio.sting('chime'); } catch (e) {} }
   function addClue(s, id) { if (!D.CLUES[id] || s.clues[id]) return; s.clues[id] = 1; chime(); toast('Clue added: ' + D.CLUES[id][0]); }
 
+  /* Pictures: images/<key>.jpg|png|webp above a page. Missing files simply don't show (unless SV.PLACEHOLDERS). */
+  window.SVimg = function (img) {
+    var exts = ['.jpg', '.png', '.webp'], i = +(img.getAttribute('data-i') || 0) + 1;
+    if (i < exts.length) { img.setAttribute('data-i', i); img.src = img.getAttribute('data-base') + exts[i]; return; }
+    var box = img.parentNode; img.remove(); if (box && !D.PLACEHOLDERS) box.remove();
+  };
+  function art(key) {
+    var a = D.ART && D.ART[key]; if (!a) return '';
+    return '<div class="media">' + (D.PLACEHOLDERS ? '<div class="ph"><span class="k">Picture to add</span><span class="t">' + esc(a.t) + '</span><span class="f">images/' + esc(key) + '.jpg</span></div>' : '') +
+      '<img src="images/' + key + '.jpg" data-base="images/' + key + '" data-i="0" alt="' + esc(a.t) + '" onerror="SVimg(this)"></div>';
+  }
+
   function body(text) {
     return String(text).split(/\n\n+/).filter(function (p) { return p.trim(); }).map(function (p) {
       var m = p.trim().match(/^@(\w+)\s+([\s\S]*)$/), h = fmt(m ? m[2] : p.trim()).replace(/@(\w+)\s/g, function (_, k) { return '<br><b class="who">' + esc(D.WHO[k] || k) + '</b> '; });
@@ -177,7 +189,7 @@
   function accuseView() {
     var s = st.s, a = st.acc, h;
     if (a.step === 'suspect') {
-      h = '<div class="col fade"><p class="eyebrow">The jailhouse</p><h1 class="scene-title">Who killed them?</h1><p class="blurb">Three rooms. One killer. You get two chances' + (s.wrong ? ', and you have used one' : '') + '.</p><div class="acts">' +
+      h = '<div class="col fade">' + art('jail') + '<p class="eyebrow">The jailhouse</p><h1 class="scene-title">Who killed them?</h1><p class="blurb">Three rooms. One killer. You get two chances' + (s.wrong ? ', and you have used one' : '') + '.</p><div class="acts">' +
         D.SUSPECTS.map(function (x) { return '<button class="act" type="button" data-sus="' + x.id + '"><b class="who">' + esc(x.name) + '</b><br>' + esc(x.blurb) + '</button>'; }).join('') + '</div></div>';
     } else if (a.step === 'evidence') {
       var owned = Object.keys(D.CLUES).filter(function (k) { return s.clues[k]; }), need = Math.min(3, owned.length);
@@ -192,7 +204,7 @@
   }
   function endingView() {
     var s = st.s, pages = D.ENDING[s.ended], p = pages[st.endPage], last = st.endPage >= pages.length - 1, h;
-    h = '<div class="col fade"><p class="eyebrow">' + (s.ended === 'win' ? 'Case closed' : 'Case lost') + '</p><h1 class="scene-title">' + esc(p.title) + '</h1><div class="scene">' + body(val(p.text, s)) + '</div>';
+    h = '<div class="col fade">' + (st.endPage === 0 ? art('ending-' + s.ended) : '') + '<p class="eyebrow">' + (s.ended === 'win' ? 'Case closed' : 'Case lost') + '</p><h1 class="scene-title">' + esc(p.title) + '</h1><div class="scene">' + body(val(p.text, s)) + '</div>';
     if (last) {
       h += '<div class="tally"><div><b>' + count(s.clues) + '</b><span>clues</span></div><div><b>' + count(s.theories) + ' / ' + D.THEORIES.length + '</b><span>theories</span></div><div><b>' + s.wrong + '</b><span>wrong names</span></div></div>';
       h += '<div class="cta-row">' + (s.ended === 'lose' ? '<button class="cta" type="button" data-do="retry">Try the final day again</button>' : '<button class="cta" type="button" data-do="board">Open the Case Board</button>') +
@@ -235,7 +247,7 @@
 
   function titleView() {
     var saved = load(), sd = saved && D.DAYS[saved.day];
-    view.innerHTML = '<div class="col title fade"><p class="eyebrow">Based on the American Specter series by Rasheedah Prioleau</p>' +
+    view.innerHTML = '<div class="col title fade">' + art('title') + '<p class="eyebrow">Based on the American Specter series by Rasheedah Prioleau</p>' +
       '<h1 class="logo">Specterville</h1><p class="tag">In Specter, Georgia, the living and the dead walk the same streets. You are Special Agent Audra Wheeler.</p>' +
       '<div class="doors">' +
       '<div class="door open"><span class="meta">Book One</span><h2>The Seven Sisters</h2><p class="d">One week, one town, one killer. Walk the map, question the living and the dead, build your case, and name the killer.</p>' +
@@ -246,7 +258,7 @@
   }
   function dayIntroView() {
     var d = day();
-    view.innerHTML = '<div class="col fade title"><p class="eyebrow">Day ' + (st.s.day + 1) + ' of ' + D.DAYS.length + ' · ' + esc(d.label) + '</p><h1 class="logo small">' + esc(d.title) + '</h1><div class="scene left">' + body(d.intro) + '</div><div class="cta-row"><button class="cta" type="button" data-do="begin">Begin the day</button></div></div>';
+    view.innerHTML = '<div class="col fade title">' + art('day-' + (st.s.day + 1)) + '<p class="eyebrow">Day ' + (st.s.day + 1) + ' of ' + D.DAYS.length + ' · ' + esc(d.label) + '</p><h1 class="logo small">' + esc(d.title) + '</h1><div class="scene left">' + body(d.intro) + '</div><div class="cta-row"><button class="cta" type="button" data-do="begin">Begin the day</button></div></div>';
   }
   function nightView() {
     var d = day();
@@ -255,7 +267,7 @@
       '<div class="cta-row"><button class="cta" type="button" data-do="nextday">On to Day ' + (st.s.day + 2) + '</button><button class="cta ghost" type="button" data-do="board">Open the Case Board</button></div></div>';
   }
   function eventView() {
-    var e = st.ev, s = st.s, ch = e.choices, h = '<div class="col fade"><div class="eyebrow"><span>' + clockText() + '</span><span class="pov">Scene</span></div><h1 class="scene-title">' + esc(e.title) + '</h1><div class="scene">' + body(val(e.text, s));
+    var e = st.ev, s = st.s, ch = e.choices, h = '<div class="col fade">' + art('event-' + e.id) + '<div class="eyebrow"><span>' + clockText() + '</span><span class="pov">Scene</span></div><h1 class="scene-title">' + esc(e.title) + '</h1><div class="scene">' + body(val(e.text, s));
     if (ch && st.evStage === 0) h += '</div><div class="choices">' + ch.map(function (c, i) { return '<button class="choice" type="button" data-evpick="' + i + '">' + fmt(c.label) + '</button>'; }).join('') + '</div></div>';
     else {
       if (ch) h += '<div class="reply">' + body(ch[s.picks['ev:' + e.id]].reply) + '</div>';
@@ -290,7 +302,7 @@
       if (sh.choices) scene += '<div class="choices">' + sh.choices.map(function (c, i) { return '<button class="choice" type="button" data-pick="' + i + '">' + fmt(c.label) + '</button>'; }).join('') + '</div>';
       scene += '</div>';
     }
-    view.innerHTML = '<div class="col fade"><div class="eyebrow"><span>' + esc(clockText()) + '</span><span class="pov">Audra</span></div>' +
+    view.innerHTML = '<div class="col fade">' + art(p.img || pid) + '<div class="eyebrow"><span>' + esc(clockText()) + '</span><span class="pov">Audra</span></div>' +
       '<h1 class="scene-title">' + esc(p.name) + '</h1><p class="blurb">' + fmt(p.blurb) + '</p>' + scene +
       '<p class="sub">What do you do?</p><div class="acts">' + acts + '</div>' +
       '<div class="cta-row"><button class="cta" type="button" data-do="map">Leave. Open the map</button></div></div>';

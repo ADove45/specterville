@@ -100,3 +100,11 @@ button.clue:hover{border-color:var(--gold)}.clue.pick{border-color:var(--gold);b
 .choice b,.scene b.who{white-space:nowrap}
 
 @media(max-width:600px){.map{aspect-ratio:4/3}}
+
+/* pictures above pages */
+.media{position:relative;width:100%;aspect-ratio:16/9;background:#000;border:1px solid var(--gold);overflow:hidden}
+.media img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;display:block}
+.media .ph{position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;padding:1rem;gap:.35rem;background:repeating-linear-gradient(135deg,rgba(212,165,116,.05) 0 14px,transparent 14px 28px),radial-gradient(ellipse at center,#2a1d14,#0b0908 75%)}
+.media .ph .k{font-size:.72rem;letter-spacing:.3em;text-transform:uppercase;color:var(--gold)}
+.media .ph .t{font-style:italic;font-size:clamp(1.1rem,3.2vw,1.6rem)}
+.media .ph .f{font-size:.72rem;letter-spacing:.08em;color:#7a6a58}
