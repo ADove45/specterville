@@ -40,7 +40,7 @@ SV.ART = {
 
   /* Set-piece scenes */
   'event-fire': { pri: 1, t: 'The Fire', p: 'A burned-out trailer sheriff station at midday, smoke rising, a volunteer fire crew resting beside a truck, a man in a rental car watching.' },
-  'event-townhall': { pri: 1, t: 'The Town Hall', p: 'A packed high school auditorium in panic, silhouettes of a crowd rushing toward the exits, a translucent girl standing on the stage with a face melting in anger, a seated woman calm in the chaos.' },
+  'event-townhall': { pri: 1, t: 'The Town Hall', p: 'A crowded high school auditorium at night, rows of seats and a stage with a podium, silhouettes of townspeople standing and turning toward the exits, a pale translucent girl standing alone on the stage in a soft ghostly glow, a seated woman calm in the middle of the crowd.' },
   'event-council': { t: 'The Circle of Trust', p: 'A candle shop after midnight, coffee mugs on a small table, a group of living figures and two pale translucent specters seated in candlelight.' },
   'event-debrief': { t: 'The Command Post', p: 'A hotel suite turned into an FBI command post, laptops, maps with strings, a team of silhouettes around a table at night.' },
   'event-margretdoor': { t: 'Two in the Morning', p: 'A dim motel hallway at two in the morning, a woman sitting on the floor against a door with her arms around her knees, a single warm lamp.' },

@@ -4,6 +4,8 @@
 
 Each prompt already includes the style, the "no text" rule and the "no recognizable faces" rule. You can also use the primer in `COPILOT_GUIDE.md` first to keep the whole set consistent.
 
+If Copilot refuses ("can't be generated due to Microsoft's code of conduct"), start a new chat, paste the primer again, and use gentler words: avoid "panic", "melting", "anger", "attack", "blood" and "violence". Describe the mood with light and posture instead.
+
 ## First batch (15)
 
 ### 1. Specterville
@@ -94,7 +96,7 @@ A burned-out trailer sheriff station at midday, smoke rising, a volunteer fire c
 Save as: `images/event-townhall.jpg`
 
 ```
-A packed high school auditorium in panic, silhouettes of a crowd rushing toward the exits, a translucent girl standing on the stage with a face melting in anger, a seated woman calm in the chaos. Dark painterly gothic illustration, oil-painting texture, deep umber and near-black shadows with warm gold highlights, candlelight and drifting mist, small-town Southern Georgia, cinematic wide 16:9 composition, no text, no lettering, no logos, and no recognizable faces (people only as silhouettes or seen from behind). Wide 16:9 landscape.
+A crowded high school auditorium at night, rows of seats and a stage with a podium, silhouettes of townspeople standing and turning toward the exits, a pale translucent girl standing alone on the stage in a soft ghostly glow, a seated woman calm in the middle of the crowd. Dark painterly gothic illustration, oil-painting texture, deep umber and near-black shadows with warm gold highlights, candlelight and drifting mist, small-town Southern Georgia, cinematic wide 16:9 composition, no text, no lettering, no logos, and no recognizable faces (people only as silhouettes or seen from behind). Wide 16:9 landscape.
 ```
 
 ### 14. Dinner at the Shelleys’
