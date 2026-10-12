@@ -108,3 +108,10 @@ button.clue:hover{border-color:var(--gold)}.clue.pick{border-color:var(--gold);b
 .media .ph .k{font-size:.72rem;letter-spacing:.3em;text-transform:uppercase;color:var(--gold)}
 .media .ph .t{font-style:italic;font-size:clamp(1.1rem,3.2vw,1.6rem)}
 .media .ph .f{font-size:.72rem;letter-spacing:.08em;color:#7a6a58}
+
+/* title: single Book One card with its cover */
+.doors{grid-template-columns:1fr!important}
+.door.open{flex-direction:row;gap:1rem;align-items:flex-start}
+.door .cover{width:38%;max-width:11rem;height:auto;border:1px solid var(--gold);flex:none}
+.door .dtext{display:flex;flex-direction:column;gap:.4rem;min-width:0;text-align:left}
+.title .door .cta-row{justify-content:flex-start}

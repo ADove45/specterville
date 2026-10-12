@@ -250,10 +250,9 @@
     view.innerHTML = '<div class="col title fade">' + art('title') + '<p class="eyebrow">Based on the American Specter series by Rasheedah Prioleau</p>' +
       '<h1 class="logo">Specterville</h1><p class="tag">In Specter, Georgia, the living and the dead walk the same streets. You are Special Agent Audra Wheeler.</p>' +
       '<div class="doors">' +
-      '<div class="door open"><span class="meta">Book One</span><h2>The Seven Sisters</h2><p class="d">One week, one town, one killer. Walk the map, question the living and the dead, build your case, and name the killer.</p>' +
-      '<div class="cta-row">' + (saved ? '<button class="cta" type="button" data-do="continue">Continue: Day ' + (saved.day + 1) + ', ' + esc(sd.title) + '</button><button class="cta ghost" type="button" data-do="new">Start over</button>' : '<button class="cta" type="button" data-do="new">Begin Case One</button>') + '</div></div>' +
-      '<div class="door sealed"><span class="meta">Book Two</span><h2>The Winter Solstice</h2><p class="d">The door is sealed. Amanda Stuart is waiting on the other side.</p></div>' +
-      '<div class="door sealed"><span class="meta">Book Three</span><h2>Restless Spirits</h2><p class="d">The door is sealed. All Hallows’ Eve is still coming.</p></div></div>' +
+      '<div class="door open"><img class="cover" src="images/cover-book-1.jpg" alt="Cover of American Specter: The Seven Sisters" onerror="this.remove()"><div class="dtext"><span class="meta">Book One</span><h2>The Seven Sisters</h2><p class="d">One week, one town, one killer. Walk the map, question the living and the dead, build your case, and name the killer.</p>' +
+      '<div class="cta-row">' + (saved ? '<button class="cta" type="button" data-do="continue">Continue: Day ' + (saved.day + 1) + ', ' + esc(sd.title) + '</button><button class="cta ghost" type="button" data-do="new">Start over</button>' : '<button class="cta" type="button" data-do="new">Begin Case One</button>') + '</div></div></div>' +
+      '</div>' +
       ((D.ACT1 || D.SITE) ? '<div class="cta-row">' + (D.ACT1 ? '<a class="cta ghost" href="' + D.ACT1 + '">Read Act I of The Seven Sisters</a>' : '') + (D.SITE ? '<a class="cta ghost" href="' + D.SITE + '" target="_blank" rel="noopener">Back to the author’s site</a>' : '') + '</div>' : '') + '</div>';
   }
   function dayIntroView() {

@@ -2,7 +2,7 @@
 
 An interactive investigation game set in the American Specter universe by Rasheedah Prioleau. You play FBI Special Agent Audra Wheeler.
 
-Case One, *The Seven Sisters* (Book One), is playable: seven days in Specter, Georgia, from a crime scene to the jailhouse accusation. Books Two and Three are sealed doors on the title screen.
+Case One, *The Seven Sisters* (Book One), is playable: seven days in Specter, Georgia, from a crime scene to the jailhouse accusation. Books Two and Three are not built yet.
 
 Open `index.html` in any modern browser. No build step. Progress saves in the browser.
 
