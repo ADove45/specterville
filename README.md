@@ -19,6 +19,6 @@ Open `index.html` in any modern browser. No build step. Progress saves in the br
 Repo Settings, Pages, Deploy from branch, `main`, `/ (root)`.
 
 ## Edit
-Add a place or an action by editing that day's `places`. Add a clue to `SV.CLUES` and a theory (a pair of clues) to `SV.THEORIES`. Set `SV.SITE` in `data.js` to link back to the main author site.
+Add a place or an action by editing that day's `places`. Add a clue to `SV.CLUES` and a theory (a pair of clues) to `SV.THEORIES`. Set `SV.SITE` (author website) and `SV.ACT1` (a page to read Act I) in `data.js` to control the links on the title screen.
 
 Dialogue is condensed from the manuscripts and keeps their wording. The manuscripts themselves are not in this repo.

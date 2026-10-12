@@ -5,8 +5,10 @@
    Dialogue is condensed from the manuscript and keeps its wording wherever it can.
    THE TRUTH: the killer is Principal Lillian Shelley, using Pleiades/chakra energy. Do not reveal it before the accusation. */
 window.SV = { DAYS: [] };
-/* Link back to the main American Specter site. Leave empty to hide the links on the title screen. Example: 'https://adove45.github.io/rasheedah-prioleau/' */
-SV.SITE = '';
+/* Links on the title screen. Leave a value empty to hide its link.
+   SITE: the author's main website. ACT1: a page where Act I of The Seven Sisters can be read. */
+SV.SITE = 'https://amykellywrites.com/';
+SV.ACT1 = '';
 
 SV.WHO = {
   audra: 'Audra', ethan: 'Ethan', benjamin: 'Benjamin', katherine: 'Katherine', charles: 'Charles', ashley: 'Ashley',
