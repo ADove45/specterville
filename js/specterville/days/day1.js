@@ -106,7 +106,7 @@
   SV.DAYS[0] = {
     label: 'Monday', title: 'The Candle', start: 'apartment',
     slots: ['12:30 pm', '1:30 pm', '2:30 pm', '3:30 pm', '4:30 pm', '5:30 pm', '6:30 pm', '7:30 pm'],
-    intro: 'It is half past noon on Monday when Special Agent Audra Wheeler steps into a dead woman’s apartment in Specter, Georgia. Gwyneth Miller is the fifth victim of a suspected serial killer, and you are the agent who has been chasing this killer across four states. The crime scene looks much like the scene of your sister’s attack thirteen years ago.',
+    intro: 'It is half past noon on Monday when Special Agent Audra Wheeler steps into a dead woman’s apartment in Specter, Georgia. Gwyneth Miller is the fifth victim of a suspected serial killer, and you are the agent who has been chasing this killer across four states. The scene is eerily like the one thirteen years ago, in your sister’s room.',
     places: PLACES,
     night: 'The first night in Specter. The case file is on the table. Somewhere across town a candle shop owner is putting out her flames, and a dead woman is sitting among them. You turn off the lamp and listen to the town not sleeping.'
   };
