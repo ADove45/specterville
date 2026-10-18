@@ -46,7 +46,7 @@
 
   /* ---------- Read aloud, using the voices on the player's own device ---------- */
   var TTS = !!(window.ASAudio && ASAudio.hasVoices && ASAudio.hasVoices());
-  var NARR = { narr: true, g: 'f', rank: 1, pitch: 0.9, rate: 0.94 };
+  var NARR = { narr: true, g: 'f', rank: 0, pitch: 0.9, rate: 0.94 };
   try { st.listen = localStorage.getItem('specterville-listen') === '1'; } catch (e) {}
   function speakItems(raw) { // narrator reads the story; quoted lines are read in that character's voice
     var out = [];

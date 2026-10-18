@@ -116,7 +116,7 @@ window.ASAudio = (function () {
   var MALE = /daniel|alex|fred|david|mark|guy|george|male|tom|aaron|ryan|brian|davis|oliver|arthur|matthew|joey|justin|eric|christopher|gordon/i;
   function loadVoices() { if (window.speechSynthesis) { try { voiceList = speechSynthesis.getVoices().filter(function (v) { return /^en/i.test(v.lang); }); } catch (e) { voiceList = []; } } }
   if (window.speechSynthesis) { loadVoices(); speechSynthesis.onvoiceschanged = loadVoices; }
-  function score(v) { return (/natural|neural|online/i.test(v.name) ? 6 : 0) + (/premium|enhanced/i.test(v.name) ? 5 : 0) + (/google|microsoft|apple|siri/i.test(v.name) ? 2 : 0) + (/en-US/i.test(v.lang) ? 1 : 0); }
+  function score(v) { return (/natural|neural|online/i.test(v.name) ? 6 : 0) + (/premium|enhanced/i.test(v.name) ? 5 : 0) + (/google|microsoft|apple|siri/i.test(v.name) ? 2 : 0) + (/en[-_]US/i.test(v.lang) ? 4 : 0); }
   function ranked(gender) {
     var re = gender === 'm' ? MALE : gender === 'f' ? FEM : null;
     var pool = voiceList.filter(function (v) { return !re || re.test(v.name); });
