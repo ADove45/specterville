@@ -419,7 +419,7 @@
     if (d === 'continue') return resume();
     if (d === 'begin') { st.v = 'place'; return proceed(); }
     if (d === 'map') { st.v = 'map'; return render(); }
-    if (d === 'turn') { st.shown = null; st.turn = true; stopSay(); return render(); }
+    if (d === 'turn') { st.shown = null; st.turn = false; stopSay(); return render(); }
     if (d === 'place') { st.v = 'place'; return render(); }
     if (d === 'board') return renderBoard();
     if (d === 'close') return closeBoard();
