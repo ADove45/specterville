@@ -340,6 +340,19 @@
   }
 
   function turnClass() { var t = st.turn; st.turn = false; return t ? 'turn' : 'fade'; }
+  /* each decision is its own full page: picture, title, text, then the way on */
+  function decisionPage(p, sh, pic) {
+    var h = '<div class="col ' + turnClass() + ' decision">' + art(pic) + '<div class="eyebrow"><span>' + esc(p.name) + '</span><span class="pov">Audra</span></div>' +
+      '<h1 class="scene-title">' + esc(sh.title) + '</h1><div class="scene">' + sh.html + '</div>';
+    if (sh.choices) h += '<p class="sub">What do you say or do?</p><div class="choices">' + sh.choices.map(function (c, i) { return '<button class="choice" type="button" data-pick="' + i + '">' + fmt(c.label) + '</button>'; }).join('') + '</div>';
+    else {
+      h += '<div class="cta-row">';
+      if (sh.hint) h += '<button class="cta" type="button" data-do="shield">Switch the shield off</button>';
+      if (sh.accuse) h += '<button class="cta" type="button" data-do="accuse">Make your accusation</button>';
+      h += '<button class="cta' + (sh.accuse || sh.hint ? ' ghost' : '') + '" type="button" data-do="turn">Turn the page</button></div>';
+    }
+    view.innerHTML = h + '</div>';
+  }
   function placeView() {
     var s = st.s, pid = s.loc, p = places()[pid], sh = st.shown, base = p.img || pid, pic = base;
     if (sh && sh.aid) pic = sh.ci != null ? ['act-' + sh.aid + '-c' + sh.ci, 'act-' + sh.aid, base] : ['act-' + sh.aid, base];
@@ -347,8 +360,9 @@
       var locked = a.lock && a.lock(s), done = s.done[a.id];
       return '<button class="act' + (done ? ' done' : '') + (locked ? ' lk' : '') + (a.specter ? ' spec' : '') + '" type="button" data-act="' + a.id + '">' + (a.specter ? '<em class="tagline">specter</em>' : '') + esc(a.label) + (done ? '<span class="chk">seen</span>' : '') + '</button>';
     }).join('');
+    if (sh) return decisionPage(p, sh, pic);
     var scene = '';
-    if (sh) {
+    if (false) {
       scene = '<div class="scene fade" id="scene"><h3>' + esc(sh.title) + '</h3>' + sh.html;
       if (sh.hint) scene += '<div class="cta-row"><button class="cta" type="button" data-do="shield">Switch the shield off</button></div>';
       if (sh.accuse) scene += '<div class="cta-row"><button class="cta" type="button" data-do="accuse">Make your accusation</button></div>';
@@ -359,7 +373,6 @@
       '<h1 class="scene-title">' + esc(p.name) + '</h1><p class="blurb">' + fmt(p.blurb) + '</p>' + scene +
       '<p class="sub">What do you do?</p><div class="acts">' + acts + '</div>' +
       '<div class="cta-row"><button class="cta" type="button" data-do="map">Leave. Open the map</button></div></div>';
-    if (sh) { var sc = $('scene'); if (sc && sc.scrollIntoView) sc.scrollIntoView({ block: 'nearest', behavior: 'smooth' }); }
   }
 
   function render() {
@@ -406,6 +419,7 @@
     if (d === 'continue') return resume();
     if (d === 'begin') { st.v = 'place'; return proceed(); }
     if (d === 'map') { st.v = 'map'; return render(); }
+    if (d === 'turn') { st.shown = null; st.turn = true; stopSay(); return render(); }
     if (d === 'place') { st.v = 'place'; return render(); }
     if (d === 'board') return renderBoard();
     if (d === 'close') return closeBoard();
