@@ -37,10 +37,10 @@
     var box = img.parentNode; img.remove(); if (box && !D.PLACEHOLDERS) box.remove();
   };
   /* art(key) or art([key, fallback, ...]): the first listed picture that exists is shown. Only keys listed in SV.ART are tried. */
-  function art(keys) {
+  function art(keys, cls) {
     keys = [].concat(keys).filter(function (k) { return D.ART && D.ART[k]; }); if (!keys.length) return '';
     var k0 = keys[0], a = D.ART[k0];
-    return '<div class="media">' + (D.PLACEHOLDERS ? '<div class="ph"><span class="k">Picture to add</span><span class="t">' + esc(a.t) + '</span><span class="f">images/' + esc(k0) + '.jpg</span></div>' : '') +
+    return '<div class="' + (cls || 'media') + '">' + (D.PLACEHOLDERS && !cls ? '<div class="ph"><span class="k">Picture to add</span><span class="t">' + esc(a.t) + '</span><span class="f">images/' + esc(k0) + '.jpg</span></div>' : '') +
       '<img src="images/' + k0 + '.jpg" data-base="images/' + k0 + '" data-i="0" data-fb="' + keys.slice(1).join('|') + '" alt="' + esc(a.t) + '" onerror="SVimg(this)"></div>';
   }
 
@@ -309,7 +309,7 @@
   }
   function dayIntroView() {
     var d = day();
-    view.innerHTML = '<div class="col ' + turnClass() + ' title">' + art('day-' + (st.s.day + 1)) + '<p class="eyebrow">Day ' + (st.s.day + 1) + ' of ' + D.DAYS.length + ' · ' + esc(d.label) + '</p><h1 class="logo small">' + esc(d.title) + '</h1><div class="scene left">' + body(d.intro) + '</div><div class="cta-row"><button class="cta" type="button" data-do="begin">Begin the day</button></div></div>';
+    view.innerHTML = art(['day-' + (st.s.day + 1), D.BACKDROP && D.BACKDROP['day-' + (st.s.day + 1)]], 'backdrop') + '<div class="col ' + turnClass() + ' title">' + '<p class="eyebrow">Day ' + (st.s.day + 1) + ' of ' + D.DAYS.length + ' · ' + esc(d.label) + '</p><h1 class="logo small">' + esc(d.title) + '</h1><div class="scene left">' + body(d.intro) + '</div><div class="cta-row"><button class="cta" type="button" data-do="begin">Begin the day</button></div></div>';
   }
   function nightView() {
     var d = day();

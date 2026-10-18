@@ -3,6 +3,8 @@
    t: what the picture is.  p: the scene prompt for an image generator.  pri: 1 = make these first.
    PROMPTS.md at the repo root is generated from this file. */
 SV.PLACEHOLDERS = false;
+/* The faint watermark picture behind each day's title page. It uses images/day-N.jpg if that exists, otherwise the picture named here. */
+SV.BACKDROP = { 'day-1': 'apartment' };
 SV.STYLE = 'Dark painterly gothic illustration, oil-painting texture, deep umber and near-black shadows with warm gold highlights, candlelight and drifting mist, small-town Southern Georgia, cinematic wide 16:9 composition, no text, no lettering, no logos, and no recognizable faces (people only as silhouettes or seen from behind)';
 
 SV.ART = {
