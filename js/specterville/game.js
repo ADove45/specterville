@@ -68,6 +68,7 @@
   }
   function stopSay() { try { if (TTS) ASAudio.stopSpeech(); } catch (e) {} }
   function toggleListen() {
+    if (!TTS) return toast('This browser has no read-aloud voices. Try Chrome, Edge or Safari, outside of an app.');
     st.listen = !st.listen; try { localStorage.setItem('specterville-listen', st.listen ? '1' : '0'); } catch (e) {}
     bar(); if (st.listen) say(st.raw); else stopSay();
   }
@@ -208,7 +209,14 @@
     }
     renderBoard();
   }
+  function renderMenu() {
+    var h = '<div class="panel-head"><h2>Menu</h2><button class="tool" type="button" data-do="close">Close</button></div>';
+    h += '<p class="sub">Read aloud</p>' + (TTS ? '<div class="cta-row"><button class="cta" type="button" data-do="listen">Listen: ' + (st.listen ? 'On' : 'Off') + '</button></div>' + voiceHtml() : '<p class="hint">This browser has no read-aloud voices. Open the game in Chrome, Edge or Safari, outside of an app, to hear it read.</p>');
+    h += '<div class="cta-row"><button class="cta ghost" type="button" data-do="totitle">Back to the title screen</button></div>';
+    $('panel-in').innerHTML = h; $('panel').hidden = false;
+  }
   function renderBoard() {
+    if (st.menuOpen) return renderMenu();
     var s = st.s || fresh(), b = st.board, panel = $('panel'), keys = Object.keys(D.CLUES), got = keys.filter(function (k) { return s.clues[k]; });
     var h = '<div class="panel-head"><h2>Case Board</h2><button class="tool" type="button" data-do="close">Close</button></div>';
     h += '<p class="sub">Clues <span>' + got.length + ' found</span></p><p class="hint">Tap two clues that belong together to form a theory.</p>';
@@ -225,7 +233,7 @@
     }).join('') + '</div>';
     $('panel-in').innerHTML = h; panel.hidden = false;
   }
-  function closeBoard() { $('panel').hidden = true; st.board.pick = []; st.board.msg = ''; }
+  function closeBoard() { st.menuOpen = false; $('panel').hidden = true; st.board.pick = []; st.board.msg = ''; }
 
   /* ---------- the accusation ---------- */
   function startAccuse() { st.acc = { step: 'suspect', suspect: null, picks: [], msg: '' }; st.v = 'accuse'; render(); }
@@ -293,8 +301,8 @@
     var s = st.s, playing = s && st.v !== 'title' && st.v !== 'prologue';
     $('clock').textContent = playing ? clockText() : '';
     var sh = $('btn-shield'); sh.hidden = !playing; sh.textContent = 'Shield: ' + (s && s.shield ? 'On' : 'Off'); sh.classList.toggle('on', !!(s && s.shield));
-    $('btn-board').hidden = !playing; $('btn-menu').hidden = st.v === 'title';
-    var lb = $('btn-listen'); if (lb) { lb.hidden = !TTS; lb.textContent = 'Listen: ' + (st.listen ? 'On' : 'Off'); lb.classList.toggle('on', st.listen); lb.setAttribute('aria-pressed', st.listen ? 'true' : 'false'); }
+    $('btn-board').hidden = !playing; $('btn-menu').hidden = false;
+    var lb = $('btn-listen'); if (lb) { lb.hidden = false; lb.textContent = 'Listen: ' + (st.listen ? 'On' : 'Off'); lb.classList.toggle('on', st.listen); lb.setAttribute('aria-pressed', st.listen ? 'true' : 'false'); }
   }
 
   function titleView() {
@@ -414,8 +422,8 @@
     var d = t.getAttribute('data-do'), g = t.getAttribute('data-go'), a = t.getAttribute('data-act'), pk = t.getAttribute('data-pick'), cl = t.getAttribute('data-clue'),
       sus = t.getAttribute('data-sus'), ev = t.getAttribute('data-ev'), ep = t.getAttribute('data-evpick');
     if (t.id === 'btn-shield') return toggleShield();
-    if (t.id === 'btn-board') return renderBoard();
-    if (t.id === 'btn-menu') { st.v = 'title'; closeBoard(); stopSay(); return render(); }
+    if (t.id === 'btn-board') { st.menuOpen = false; return renderBoard(); }
+    if (t.id === 'btn-menu') { st.menuOpen = true; return renderBoard(); }
     if (t.id === 'btn-listen') return toggleListen();
     if (cl) return pickClue(cl);
     if (g) return travel(g);
@@ -425,6 +433,8 @@
     if (ev) { var p = st.acc.picks, i = p.indexOf(ev), need = Math.min(3, Object.keys(D.CLUES).filter(function (k) { return st.s.clues[k]; }).length); if (i >= 0) p.splice(i, 1); else if (p.length < need) p.push(ev); return render(); }
     if (pk != null && st.shown && st.shown.aid) return choose(st.s.loc, st.shown.aid, +pk);
     if (!d) return;
+    if (d === 'listen') { toggleListen(); return renderBoard(); }
+    if (d === 'totitle') { st.v = 'title'; closeBoard(); stopSay(); return render(); }
     if (d === 'pro-next') { st.pro += 1; st.turn = true; stopSay(); if (st.pro >= D.PROLOGUE.length) return startDay(0); sayPro(); return render(); }
     if (d === 'new') return startNew();
     if (d === 'continue') return resume();
