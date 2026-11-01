@@ -119,11 +119,12 @@ window.ASAudio = (function () {
   function score(v) { return (/natural|neural|online/i.test(v.name) ? 6 : 0) + (/premium|enhanced/i.test(v.name) ? 5 : 0) + (/google|microsoft|apple|siri/i.test(v.name) ? 2 : 0) + (/en[-_]US/i.test(v.lang) ? 4 : 0); }
   function ranked(gender) {
     var re = gender === 'm' ? MALE : gender === 'f' ? FEM : null;
-    var pool = voiceList.filter(function (v) { return !re || re.test(v.name); });
+    var pool = voiceList.filter(function (v) { return !bad[v.name] && (!re || re.test(v.name)); });
     if (!pool.length && re) pool = voiceList.slice();
     return pool.sort(function (a, b) { return score(b) - score(a); });
   }
-  function findByName(n) { return n && voiceList.filter(function (v) { return v.name === n; })[0]; }
+  var bad = {}; // voices that failed to start on this device; skipped from then on
+  function findByName(n) { return n && voiceList.filter(function (v) { return v.name === n && !bad[v.name]; })[0]; }
   function resolve(who) {
     who = who || {}; var g = who.g || 'f', want = who.narr ? pref.narr : who.aud ? pref.aud : pref[g], v = findByName(want), pitch = who.pitch || 1, rate = (who.rate || 1) * pref.rate;
     if (!v) { var list = ranked(g); v = list[Math.min(who.rank || 0, list.length - 1)] || null; }
@@ -145,8 +146,13 @@ window.ASAudio = (function () {
       var it = items[i], cs = chunks(it.text.replace(/[*\u2192]/g, '')), k = 0, cfg = resolve(it.who); if (onItem) onItem(i); i++;
       (function nextChunk() {
         if (my !== run) return; if (k >= cs.length) return nextItem();
-        var u = new SpeechSynthesisUtterance(cs[k++]); if (cfg.voice) { u.voice = cfg.voice; u.lang = cfg.voice.lang; } else u.lang = 'en-US';
-        u.pitch = cfg.pitch; u.rate = cfg.rate; u.onend = u.onerror = nextChunk; speechSynthesis.speak(u);
+        var u = new SpeechSynthesisUtterance(cs[k++]), started = false, tried = cfg.voice; if (cfg.voice) { u.voice = cfg.voice; u.lang = cfg.voice.lang; } else u.lang = 'en-US';
+        u.pitch = cfg.pitch; u.rate = cfg.rate; u.onstart = function () { started = true; }; u.onend = nextChunk;
+        u.onerror = function (e) { // a voice that cannot start is set aside and the chunk is tried again with the next best one
+          if (my === run && !started && tried && e && e.error && !/interrupted|canceled/i.test(e.error)) { bad[tried.name] = 1; cfg = resolve(it.who); k--; }
+          nextChunk();
+        };
+        speechSynthesis.speak(u);
       })();
     }
     nextItem(); return true;
