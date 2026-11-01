@@ -171,18 +171,19 @@
     var html = body(val(a.text, s));
     st.turn = true;
     say(val(a.text, s) + (a.choices && s.picks[aid] != null ? '\n\n' + a.choices[s.picks[aid]].reply : ''));
-    if (a.choices && s.picks[aid] == null) st.shown = { title: a.label, html: html, choices: a.choices, aid: aid };
+    if (a.choices && s.picks[aid] == null) st.shown = { title: a.label, html: html, choices: a.choices, aid: aid, exit: a.exit };
     else {
       if (a.choices) html += '<div class="reply">' + body(a.choices[s.picks[aid]].reply) + '</div>';
-      st.shown = { title: a.label, html: html, accuse: !!a.accuse, aid: aid, ci: a.choices ? s.picks[aid] : null };
+      st.shown = { title: a.label, html: html, accuse: !!a.accuse, aid: aid, ci: a.choices ? s.picks[aid] : null, more: a.choices ? others(a, s.picks[aid]) : null, exit: a.exit };
     }
     unlockCheck(); save(); render();
   }
-  function choose(pid, aid, i) {
-    var s = st.s, a = findAction(pid, aid), c = a.choices[i];
-    s.picks[aid] = i; if (c.fx) c.fx(s, api);
+  function others(a, i) { return a.choices.map(function (c, n) { return n; }).filter(function (n) { return n !== i; }); }
+  function choose(pid, aid, i) { // the first thing you say counts; the other choices can still be tried, and only change what you hear
+    var s = st.s, a = findAction(pid, aid), c = a.choices[i], first = s.picks[aid] == null;
     st.turn = true; say(c.reply);
-    st.shown = { title: a.label, html: body(val(a.text, s)) + '<div class="reply">' + body(c.reply) + '</div>', aid: aid, ci: i };
+    if (first) { s.picks[aid] = i; if (c.fx) c.fx(s, api); }
+    st.shown = { title: a.label, html: first ? body(val(a.text, s)) + '<div class="reply">' + body(c.reply) + '</div>' : '<p class="said">' + fmt(c.label) + '</p>' + body(c.reply), aid: aid, ci: i, more: others(a, i), exit: a.exit };
     unlockCheck(); save(); render();
   }
   function chooseEvent(i) {
@@ -353,11 +354,15 @@
     var h = '<div class="col ' + turnClass() + ' decision">' + art(pic) + '<div class="eyebrow"><span>' + esc(p.name) + '</span><span class="pov">Audra</span></div>' +
       '<h1 class="scene-title">' + esc(sh.title) + '</h1><div class="scene">' + sh.html + '</div>';
     if (sh.choices) h += '<p class="sub">What do you say or do?</p><div class="choices">' + sh.choices.map(function (c, i) { return '<button class="choice" type="button" data-pick="' + i + '">' + fmt(c.label) + '</button>'; }).join('') + '</div>';
-    else {
+    else if (sh.more && sh.more.length) {
+      var ch = findAction(st.s.loc, sh.aid).choices;
+      h += '<p class="sub">Or you could say</p><div class="choices">' + sh.more.map(function (i) { return '<button class="choice" type="button" data-pick="' + i + '">' + fmt(ch[i].label) + '</button>'; }).join('') + '</div>' +
+        '<div class="cta-row"><button class="cta ghost" type="button" data-do="turn">' + esc(sh.exit || 'Turn the page') + '</button></div>';
+    } else {
       h += '<div class="cta-row">';
       if (sh.hint) h += '<button class="cta" type="button" data-do="shield">Switch the shield off</button>';
       if (sh.accuse) h += '<button class="cta" type="button" data-do="accuse">Make your accusation</button>';
-      h += '<button class="cta' + (sh.accuse || sh.hint ? ' ghost' : '') + '" type="button" data-do="turn">Turn the page</button></div>';
+      h += '<button class="cta' + (sh.accuse || sh.hint ? ' ghost' : '') + '" type="button" data-do="turn">' + esc(sh.exit || 'Turn the page') + '</button></div>';
     }
     view.innerHTML = h + '</div>';
   }

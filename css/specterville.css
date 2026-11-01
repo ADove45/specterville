@@ -138,3 +138,5 @@ button.clue:hover{border-color:var(--gold)}.clue.pick{border-color:var(--gold);b
 .backdrop img{width:100%;height:100%;object-fit:cover;display:block;filter:saturate(.8)}
 .backdrop::after{content:"";position:absolute;inset:0;background:radial-gradient(ellipse at 50% 45%,transparent 25%,rgba(11,9,8,.55) 100%)}
 .page .col{position:relative;z-index:1}
+
+.said{color:var(--gold);font-style:italic;border-left:2px solid var(--gold);padding-left:.8rem}
