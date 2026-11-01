@@ -290,7 +290,7 @@
       '<path d="' + r + '" fill="none" stroke="#5a4532" stroke-width=".4" stroke-dasharray="1.5 2" stroke-linecap="round"/></svg>';
   }
   function bar() {
-    var s = st.s, playing = s && st.v !== 'title';
+    var s = st.s, playing = s && st.v !== 'title' && st.v !== 'prologue';
     $('clock').textContent = playing ? clockText() : '';
     var sh = $('btn-shield'); sh.hidden = !playing; sh.textContent = 'Shield: ' + (s && s.shield ? 'On' : 'Off'); sh.classList.toggle('on', !!(s && s.shield));
     $('btn-board').hidden = !playing; $('btn-menu').hidden = st.v === 'title';
@@ -378,14 +378,24 @@
   function render() {
     bar();
     var v = st.v;
-    if (v === 'title') titleView(); else if (v === 'dayintro') dayIntroView(); else if (v === 'night') nightView(); else if (v === 'event') eventView();
+    if (v === 'title') titleView(); else if (v === 'dayintro') dayIntroView(); else if (v === 'night') nightView(); else if (v === 'event') eventView(); else if (v === 'prologue') prologueView();
     else if (v === 'map') mapView(); else if (v === 'accuse') accuseView(); else if (v === 'ending') endingView(); else placeView();
     if (!$('panel').hidden) renderBoard();
     var sc = view.parentNode; if (sc && sc.scrollTo && v !== 'place') sc.scrollTo(0, 0);
   }
 
   /* ---------- input ---------- */
-  function startNew() { wipe(); st.s = fresh(); st.shown = null; startDay(0); }
+  function sayPro() { var p = (D.PROLOGUE || [])[st.pro]; if (p) say(p.text); }
+  function prologueView() {
+    var pages = D.PROLOGUE, p = pages[st.pro], last = st.pro >= pages.length - 1;
+    view.innerHTML = '<div class="col ' + turnClass() + '">' + art(p.art) + '<p class="eyebrow"><span>Prologue</span><span>Saturday night</span></p><h1 class="scene-title">' + esc(p.title) + '</h1><div class="scene">' + body(p.text) + '</div>' +
+      '<div class="cta-row"><button class="cta" type="button" data-do="pro-next">' + (last ? 'Begin Day One: Monday' : 'Turn the page') + '</button></div></div>';
+  }
+  function startNew() {
+    wipe(); st.s = fresh(); st.shown = null;
+    if (D.PROLOGUE && D.PROLOGUE.length) { st.pro = 0; st.turn = true; st.v = 'prologue'; sayPro(); return render(); }
+    startDay(0);
+  }
   function resume() {
     st.s = load(); var s = st.s; st.shown = null;
     if (s.ended) { st.endPage = 0; st.v = 'ending'; sayEnding(); return render(); }
@@ -415,6 +425,7 @@
     if (ev) { var p = st.acc.picks, i = p.indexOf(ev), need = Math.min(3, Object.keys(D.CLUES).filter(function (k) { return st.s.clues[k]; }).length); if (i >= 0) p.splice(i, 1); else if (p.length < need) p.push(ev); return render(); }
     if (pk != null && st.shown && st.shown.aid) return choose(st.s.loc, st.shown.aid, +pk);
     if (!d) return;
+    if (d === 'pro-next') { st.pro += 1; st.turn = true; stopSay(); if (st.pro >= D.PROLOGUE.length) return startDay(0); sayPro(); return render(); }
     if (d === 'new') return startNew();
     if (d === 'continue') return resume();
     if (d === 'begin') { st.v = 'place'; return proceed(); }

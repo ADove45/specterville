@@ -11,6 +11,10 @@ SV.ART = {
   'title': { pri: 1, t: 'Specterville', p: 'A small Georgia town at dusk under a sky of mist, a tall church steeple and a grand mansion on a hill, pale translucent ghostly figures standing in lit windows and on the street, seven faint glowing stars of the Pleiades cluster above the rooftops.' },
 
   /* Day cards */
+  'prologue-1': { t: 'The Daylight Candle Shop, Saturday', p: 'A candle shop counter in afternoon light, a dark-haired woman with a ponytail and glasses seen from behind accepting a small white box tied with ribbon from the shop owner, purple candles on shelves, lavender sprigs.' },
+  'prologue-2': { t: 'The Prayer', p: 'A woman seen from behind sitting on the edge of a bed holding a small instruction card up to a lit purple candle on the bedside table, a match smoking in a dish, the room warm and quiet at night.' },
+  'prologue-3': { t: 'Before dawn', p: 'A rumpled bed in the blue hour before dawn, a woman asleep under the covers, a faint shimmer of mist and gold light drifting above the sheets, a lit purple candle guttering on the bedside table, the window just beginning to pale.' },
+  'prologue-4': { t: 'Dawn', p: 'A bedroom at first light, a dark hand-shaped shadow stretched across the wall above a bed, a purple candle burned out on the bedside table with one thin thread of smoke, still and silent, no people visible.' },
   'day-1': { t: 'Day One: The Candle', p: 'A single purple candle burning on a bedside table in a dark bedroom, the flame reflected in a window, a dark hand-shaped shadow on the wall.' },
   'day-2': { t: 'Day Two: The Past', p: 'A cluttered old filing cabinet drawer open in a dim trailer office, three yellowed case pages, a pale ghostly man in suspenders fading into a recliner in the background.' },
   'day-3': { t: 'Day Three: Ashes', p: 'The smoking ruins of a burned-down trailer sheriff station at midday, a lone figure standing in the ash, a rental car in the distance, pale smoke rising.' },

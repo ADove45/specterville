@@ -1,12 +1,12 @@
 # Specterville picture prompts
 
-54 pictures. Every prompt below is complete and stands on its own: copy the whole block into Copilot (or any image generator), one at a time, and save the result with the exact file name shown.
+58 pictures. Every prompt below is complete and stands on its own: copy the whole block into Copilot (or any image generator), one at a time, and save the result with the exact file name shown.
 
 Each prompt already includes the style, the "no text" rule and the "no recognizable faces" rule. You can also use the primer in `COPILOT_GUIDE.md` first to keep the whole set consistent.
 
 If Copilot refuses ("can't be generated due to Microsoft's code of conduct"), start a new chat, paste the primer again, and use gentler words: avoid "panic", "melting", "anger", "attack", "blood" and "violence". Describe the mood with light and posture instead.
 
-## Pages: places, scenes, day cards, endings (15 first, then 22 more)
+## Pages: places, scenes, day cards, endings (15 first, then 26 more)
 
 ### 1. Specterville
 Save as: `images/title.jpg`
@@ -113,154 +113,182 @@ Save as: `images/ending-win.jpg`
 An interrogation room just after a surge of pink-violet energy has faded, a toppled chair beside a metal table under a hanging lamp, a soft pink haze dissolving in the air, the stars of the Pleiades visible through a high window, silhouettes of paramedics at the doorway. Dark painterly gothic illustration, oil-painting texture, deep umber and near-black shadows with warm gold highlights, candlelight and drifting mist, small-town Southern Georgia, cinematic wide 16:9 composition, no text, no lettering, no logos, and no recognizable faces (people only as silhouettes or seen from behind). Wide 16:9 landscape.
 ```
 
-### 16. Day One: The Candle
+### 16. The Daylight Candle Shop, Saturday
+Save as: `images/prologue-1.jpg`
+
+```
+A candle shop counter in afternoon light, a dark-haired woman with a ponytail and glasses seen from behind accepting a small white box tied with ribbon from the shop owner, purple candles on shelves, lavender sprigs. Dark painterly gothic illustration, oil-painting texture, deep umber and near-black shadows with warm gold highlights, candlelight and drifting mist, small-town Southern Georgia, cinematic wide 16:9 composition, no text, no lettering, no logos, and no recognizable faces (people only as silhouettes or seen from behind). Wide 16:9 landscape.
+```
+
+### 17. The Prayer
+Save as: `images/prologue-2.jpg`
+
+```
+A woman seen from behind sitting on the edge of a bed holding a small instruction card up to a lit purple candle on the bedside table, a match smoking in a dish, the room warm and quiet at night. Dark painterly gothic illustration, oil-painting texture, deep umber and near-black shadows with warm gold highlights, candlelight and drifting mist, small-town Southern Georgia, cinematic wide 16:9 composition, no text, no lettering, no logos, and no recognizable faces (people only as silhouettes or seen from behind). Wide 16:9 landscape.
+```
+
+### 18. Before dawn
+Save as: `images/prologue-3.jpg`
+
+```
+A rumpled bed in the blue hour before dawn, a woman asleep under the covers, a faint shimmer of mist and gold light drifting above the sheets, a lit purple candle guttering on the bedside table, the window just beginning to pale. Dark painterly gothic illustration, oil-painting texture, deep umber and near-black shadows with warm gold highlights, candlelight and drifting mist, small-town Southern Georgia, cinematic wide 16:9 composition, no text, no lettering, no logos, and no recognizable faces (people only as silhouettes or seen from behind). Wide 16:9 landscape.
+```
+
+### 19. Dawn
+Save as: `images/prologue-4.jpg`
+
+```
+A bedroom at first light, a dark hand-shaped shadow stretched across the wall above a bed, a purple candle burned out on the bedside table with one thin thread of smoke, still and silent, no people visible. Dark painterly gothic illustration, oil-painting texture, deep umber and near-black shadows with warm gold highlights, candlelight and drifting mist, small-town Southern Georgia, cinematic wide 16:9 composition, no text, no lettering, no logos, and no recognizable faces (people only as silhouettes or seen from behind). Wide 16:9 landscape.
+```
+
+### 20. Day One: The Candle
 Save as: `images/day-1.jpg`
 
 ```
 A single purple candle burning on a bedside table in a dark bedroom, the flame reflected in a window, a dark hand-shaped shadow on the wall. Dark painterly gothic illustration, oil-painting texture, deep umber and near-black shadows with warm gold highlights, candlelight and drifting mist, small-town Southern Georgia, cinematic wide 16:9 composition, no text, no lettering, no logos, and no recognizable faces (people only as silhouettes or seen from behind). Wide 16:9 landscape.
 ```
 
-### 17. Day Two: The Past
+### 21. Day Two: The Past
 Save as: `images/day-2.jpg`
 
 ```
 A cluttered old filing cabinet drawer open in a dim trailer office, three yellowed case pages, a pale ghostly man in suspenders fading into a recliner in the background. Dark painterly gothic illustration, oil-painting texture, deep umber and near-black shadows with warm gold highlights, candlelight and drifting mist, small-town Southern Georgia, cinematic wide 16:9 composition, no text, no lettering, no logos, and no recognizable faces (people only as silhouettes or seen from behind). Wide 16:9 landscape.
 ```
 
-### 18. Day Three: Ashes
+### 22. Day Three: Ashes
 Save as: `images/day-3.jpg`
 
 ```
 The smoking ruins of a burned-down trailer sheriff station at midday, a lone figure standing in the ash, a rental car in the distance, pale smoke rising. Dark painterly gothic illustration, oil-painting texture, deep umber and near-black shadows with warm gold highlights, candlelight and drifting mist, small-town Southern Georgia, cinematic wide 16:9 composition, no text, no lettering, no logos, and no recognizable faces (people only as silhouettes or seen from behind). Wide 16:9 landscape.
 ```
 
-### 19. Day Four: The Square
+### 23. Day Four: The Square
 Save as: `images/day-4.jpg`
 
 ```
 A historic Southern town square in afternoon light, storefronts with striped awnings, a neon sign flickering, a faint ghostly figure reflected in a shop window. Dark painterly gothic illustration, oil-painting texture, deep umber and near-black shadows with warm gold highlights, candlelight and drifting mist, small-town Southern Georgia, cinematic wide 16:9 composition, no text, no lettering, no logos, and no recognizable faces (people only as silhouettes or seen from behind). Wide 16:9 landscape.
 ```
 
-### 20. Day Five: The Dinner
+### 24. Day Five: The Dinner
 Save as: `images/day-5.jpg`
 
 ```
 A grand antebellum mansion at dusk with every window lit gold, a long table glimpsed through the windows, pale ghostly servers moving among the guests, magnolia trees in front. Dark painterly gothic illustration, oil-painting texture, deep umber and near-black shadows with warm gold highlights, candlelight and drifting mist, small-town Southern Georgia, cinematic wide 16:9 composition, no text, no lettering, no logos, and no recognizable faces (people only as silhouettes or seen from behind). Wide 16:9 landscape.
 ```
 
-### 21. Day Six: Church
+### 25. Day Six: Church
 Save as: `images/day-6.jpg`
 
 ```
 A tall white country church with a cross-topped steeple on a Sunday morning, stained glass glowing, a still lake in the foreground with a wooden dock. Dark painterly gothic illustration, oil-painting texture, deep umber and near-black shadows with warm gold highlights, candlelight and drifting mist, small-town Southern Georgia, cinematic wide 16:9 composition, no text, no lettering, no logos, and no recognizable faces (people only as silhouettes or seen from behind). Wide 16:9 landscape.
 ```
 
-### 22. Day Seven: The Seventh Sister
+### 26. Day Seven: The Seventh Sister
 Save as: `images/day-7.jpg`
 
 ```
 A night sky over a small town with the Pleiades star cluster blazing, a faint pink glow gathering over a mansion and a jailhouse below. Dark painterly gothic illustration, oil-painting texture, deep umber and near-black shadows with warm gold highlights, candlelight and drifting mist, small-town Southern Georgia, cinematic wide 16:9 composition, no text, no lettering, no logos, and no recognizable faces (people only as silhouettes or seen from behind). Wide 16:9 landscape.
 ```
 
-### 23. The Station Ruins
+### 27. The Station Ruins
 Save as: `images/station-ruins.jpg`
 
 ```
 The blackened smoldering ruins of a burned trailer, twisted metal and a filing cabinet standing in the ash, pale smoke curling up, a lone silhouette and a car in the distance. Dark painterly gothic illustration, oil-painting texture, deep umber and near-black shadows with warm gold highlights, candlelight and drifting mist, small-town Southern Georgia, cinematic wide 16:9 composition, no text, no lettering, no logos, and no recognizable faces (people only as silhouettes or seen from behind). Wide 16:9 landscape.
 ```
 
-### 24. The Bed & Breakfast
+### 28. The Bed & Breakfast
 Save as: `images/bnb.jpg`
 
 ```
 A quiet B&B bedroom at night, lamplight on a table with a thick case file and a vase of roses, a television glowing, a specter shield bracelet on the nightstand. Dark painterly gothic illustration, oil-painting texture, deep umber and near-black shadows with warm gold highlights, candlelight and drifting mist, small-town Southern Georgia, cinematic wide 16:9 composition, no text, no lettering, no logos, and no recognizable faces (people only as silhouettes or seen from behind). Wide 16:9 landscape.
 ```
 
-### 25. The HUD Apartments
+### 29. The HUD Apartments
 Save as: `images/hud.jpg`
 
 ```
 A run-down two-story apartment complex with dried patchy grass and scattered trash, a flickering lobby light, an alley of bars glowing in the distance. Dark painterly gothic illustration, oil-painting texture, deep umber and near-black shadows with warm gold highlights, candlelight and drifting mist, small-town Southern Georgia, cinematic wide 16:9 composition, no text, no lettering, no logos, and no recognizable faces (people only as silhouettes or seen from behind). Wide 16:9 landscape.
 ```
 
-### 26. Ethan’s Lake House
+### 30. Ethan’s Lake House
 Save as: `images/lake.jpg`
 
 ```
 A two-story country farmhouse with its porch light on, a large still lake behind it at twilight, a pickup truck in the gravel drive, a faint ghostly figure seated in a window. Dark painterly gothic illustration, oil-painting texture, deep umber and near-black shadows with warm gold highlights, candlelight and drifting mist, small-town Southern Georgia, cinematic wide 16:9 composition, no text, no lettering, no logos, and no recognizable faces (people only as silhouettes or seen from behind). Wide 16:9 landscape.
 ```
 
-### 27. Renee Stevens’ Trailer
+### 31. Renee Stevens’ Trailer
 Save as: `images/trailer.jpg`
 
 ```
 A tidy doublewide trailer in a trailer park, a container garden of roses and snapdragons by the steps, bird feeders full of blue jays and hummingbirds, morning light. Dark painterly gothic illustration, oil-painting texture, deep umber and near-black shadows with warm gold highlights, candlelight and drifting mist, small-town Southern Georgia, cinematic wide 16:9 composition, no text, no lettering, no logos, and no recognizable faces (people only as silhouettes or seen from behind). Wide 16:9 landscape.
 ```
 
-### 28. Specter High School
+### 32. Specter High School
 Save as: `images/school.jpg`
 
 ```
 A Southern high school at night, a lit auditorium full of a crowd, a banner announcing a town hall meeting, a principal’s office window glowing gold. Dark painterly gothic illustration, oil-painting texture, deep umber and near-black shadows with warm gold highlights, candlelight and drifting mist, small-town Southern Georgia, cinematic wide 16:9 composition, no text, no lettering, no logos, and no recognizable faces (people only as silhouettes or seen from behind). Wide 16:9 landscape.
 ```
 
-### 29. The Shops on the Square
+### 33. The Shops on the Square
 Save as: `images/shops.jpg`
 
 ```
 Three storefronts on a small-town square: a discount dress shop, a goth teen boutique, and an elegant gown shop with mannequins, afternoon light and a neon sign. Dark painterly gothic illustration, oil-painting texture, deep umber and near-black shadows with warm gold highlights, candlelight and drifting mist, small-town Southern Georgia, cinematic wide 16:9 composition, no text, no lettering, no logos, and no recognizable faces (people only as silhouettes or seen from behind). Wide 16:9 landscape.
 ```
 
-### 30. The Scoop
+### 34. The Scoop
 Save as: `images/scoop.jpg`
 
 ```
 A dim hole-in-the-wall club down a poorly lit alley, thumping blue and magenta stage light spilling through the back door, a bouncer silhouette, haze. Dark painterly gothic illustration, oil-painting texture, deep umber and near-black shadows with warm gold highlights, candlelight and drifting mist, small-town Southern Georgia, cinematic wide 16:9 composition, no text, no lettering, no logos, and no recognizable faces (people only as silhouettes or seen from behind). Wide 16:9 landscape.
 ```
 
-### 31. The State Prison
+### 35. The State Prison
 Save as: `images/prison.jpg`
 
 ```
 A grim state prison visitation room with a metal table bolted to the floor, shackles, harsh fluorescent light, a huge shadowed silhouette across the table. Dark painterly gothic illustration, oil-painting texture, deep umber and near-black shadows with warm gold highlights, candlelight and drifting mist, small-town Southern Georgia, cinematic wide 16:9 composition, no text, no lettering, no logos, and no recognizable faces (people only as silhouettes or seen from behind). Wide 16:9 landscape.
 ```
 
-### 32. The Circle of Trust
+### 36. The Circle of Trust
 Save as: `images/event-council.jpg`
 
 ```
 A candle shop after midnight, coffee mugs on a small table, a group of living figures and two pale translucent specters seated in candlelight. Dark painterly gothic illustration, oil-painting texture, deep umber and near-black shadows with warm gold highlights, candlelight and drifting mist, small-town Southern Georgia, cinematic wide 16:9 composition, no text, no lettering, no logos, and no recognizable faces (people only as silhouettes or seen from behind). Wide 16:9 landscape.
 ```
 
-### 33. The Command Post
+### 37. The Command Post
 Save as: `images/event-debrief.jpg`
 
 ```
 A hotel suite turned into an FBI command post, laptops, maps with strings, a team of silhouettes around a table at night. Dark painterly gothic illustration, oil-painting texture, deep umber and near-black shadows with warm gold highlights, candlelight and drifting mist, small-town Southern Georgia, cinematic wide 16:9 composition, no text, no lettering, no logos, and no recognizable faces (people only as silhouettes or seen from behind). Wide 16:9 landscape.
 ```
 
-### 34. Two in the Morning
+### 38. Two in the Morning
 Save as: `images/event-margretdoor.jpg`
 
 ```
 A dim motel hallway at two in the morning, a woman sitting on the floor against a door with her arms around her knees, a single warm lamp. Dark painterly gothic illustration, oil-painting texture, deep umber and near-black shadows with warm gold highlights, candlelight and drifting mist, small-town Southern Georgia, cinematic wide 16:9 composition, no text, no lettering, no logos, and no recognizable faces (people only as silhouettes or seen from behind). Wide 16:9 landscape.
 ```
 
-### 35. Three in the Morning
+### 39. Three in the Morning
 Save as: `images/event-overdose.jpg`
 
 ```
 A hospital waiting room at three in the morning, a man with his head in his hands, two stern elderly women stepping off an elevator, fluorescent light. Dark painterly gothic illustration, oil-painting texture, deep umber and near-black shadows with warm gold highlights, candlelight and drifting mist, small-town Southern Georgia, cinematic wide 16:9 composition, no text, no lettering, no logos, and no recognizable faces (people only as silhouettes or seen from behind). Wide 16:9 landscape.
 ```
 
-### 36. The News
+### 40. The News
 Save as: `images/event-tv.jpg`
 
 ```
 A television in a dim hotel room showing a news broadcast outside a mansion, flashing camera lights, a drugged woman in a robe led down steps by a man. Dark painterly gothic illustration, oil-painting texture, deep umber and near-black shadows with warm gold highlights, candlelight and drifting mist, small-town Southern Georgia, cinematic wide 16:9 composition, no text, no lettering, no logos, and no recognizable faces (people only as silhouettes or seen from behind). Wide 16:9 landscape.
 ```
 
-### 37. Case Lost
+### 41. Case Lost
 Save as: `images/ending-lose.jpg`
 
 ```
@@ -271,119 +299,119 @@ A mansion bedroom with the lights out, a window open to the night, seven stars s
 
 The page turns to one of these when the player picks an action. If a file is missing, the game shows the place picture instead.
 
-### 38. Examine the body
+### 42. Examine the body
 Save as: `images/act-body.jpg`
 
 ```
 A bed seen from the doorway through yellow police tape in noon light, a white sheet drawn up and dark hair spread across a pillow, a bedside lamp, the mood quiet and solemn. Dark painterly gothic illustration, oil-painting texture, deep umber and near-black shadows with warm gold highlights, candlelight and drifting mist, small-town Southern Georgia, cinematic wide 16:9 composition, no text, no lettering, no logos, and no recognizable faces (people only as silhouettes or seen from behind). Wide 16:9 landscape.
 ```
 
-### 39. The purple candle
+### 43. The purple candle
 Save as: `images/act-candle.jpg`
 
 ```
 A close view of a large purple candle burned low beside a small white instruction card on a bedside table, soft gold light, wax dripping, a faint curl of smoke. Dark painterly gothic illustration, oil-painting texture, deep umber and near-black shadows with warm gold highlights, candlelight and drifting mist, small-town Southern Georgia, cinematic wide 16:9 composition, no text, no lettering, no logos, and no recognizable faces (people only as silhouettes or seen from behind). Wide 16:9 landscape.
 ```
 
-### 40. Search the room
+### 44. Search the room
 Save as: `images/act-room.jpg`
 
 ```
 A cheap feminine bedroom being searched, a dresser with perfume bottles and candles, a mirror, scattered clothing, police tape, perfume haze in warm light. Dark painterly gothic illustration, oil-painting texture, deep umber and near-black shadows with warm gold highlights, candlelight and drifting mist, small-town Southern Georgia, cinematic wide 16:9 composition, no text, no lettering, no logos, and no recognizable faces (people only as silhouettes or seen from behind). Wide 16:9 landscape.
 ```
 
-### 41. Ethan in the doorway
+### 45. Ethan in the doorway
 Save as: `images/act-ethan_apt.jpg`
 
 ```
 A tall man in a ball cap and faded jeans stepping through a bedroom doorway into warm light, seen mostly from behind, a woman in a dark suit turning toward him in silhouette. Dark painterly gothic illustration, oil-painting texture, deep umber and near-black shadows with warm gold highlights, candlelight and drifting mist, small-town Southern Georgia, cinematic wide 16:9 composition, no text, no lettering, no logos, and no recognizable faces (people only as silhouettes or seen from behind). Wide 16:9 landscape.
 ```
 
-### 42. The reference desk
+### 46. The reference desk
 Save as: `images/act-ben.jpg`
 
 ```
 A pale translucent young man with large glasses seated behind a library reference desk, fading at the edges, warm lamp light, rows of shelves behind him, seen in profile. Dark painterly gothic illustration, oil-painting texture, deep umber and near-black shadows with warm gold highlights, candlelight and drifting mist, small-town Southern Georgia, cinematic wide 16:9 composition, no text, no lettering, no logos, and no recognizable faces (people only as silhouettes or seen from behind). Wide 16:9 landscape.
 ```
 
-### 43. The woman in the aisle
+### 47. The woman in the aisle
 Save as: `images/act-katherine.jpg`
 
 ```
 A woman in her late thirties standing alone in a narrow library aisle between tall shelves, arms crossed, head bowed, seen from behind in soft gold light. Dark painterly gothic illustration, oil-painting texture, deep umber and near-black shadows with warm gold highlights, candlelight and drifting mist, small-town Southern Georgia, cinematic wide 16:9 composition, no text, no lettering, no logos, and no recognizable faces (people only as silhouettes or seen from behind). Wide 16:9 landscape.
 ```
 
-### 44. The manager’s door
+### 48. The manager’s door
 Save as: `images/act-charles.jpg`
 
 ```
 A cluttered library manager’s office door ajar, warm light spilling into a dim hallway, a tall man in silhouette in the doorway and a purple-haired translucent girl slipping past. Dark painterly gothic illustration, oil-painting texture, deep umber and near-black shadows with warm gold highlights, candlelight and drifting mist, small-town Southern Georgia, cinematic wide 16:9 composition, no text, no lettering, no logos, and no recognizable faces (people only as silhouettes or seen from behind). Wide 16:9 landscape.
 ```
 
-### 45. Gwyneth’s computer
+### 49. Gwyneth’s computer
 Save as: `images/act-computer.jpg`
 
 ```
 A library computer glowing in a dim corner, a web page of purple candles on the screen, a woman seated in silhouette from behind, a coffee mug beside the keyboard. Dark painterly gothic illustration, oil-painting texture, deep umber and near-black shadows with warm gold highlights, candlelight and drifting mist, small-town Southern Georgia, cinematic wide 16:9 composition, no text, no lettering, no logos, and no recognizable faces (people only as silhouettes or seen from behind). Wide 16:9 landscape.
 ```
 
-### 46. The waitress
+### 50. The waitress
 Save as: `images/act-ashley.jpg`
 
 ```
 A pale translucent young waitress in a pink diner uniform fading beside a booth, carrying a glass of water, warm neon glow, plastic menus on the table. Dark painterly gothic illustration, oil-painting texture, deep umber and near-black shadows with warm gold highlights, candlelight and drifting mist, small-town Southern Georgia, cinematic wide 16:9 composition, no text, no lettering, no logos, and no recognizable faces (people only as silhouettes or seen from behind). Wide 16:9 landscape.
 ```
 
-### 47. Ethan joins you
+### 51. Ethan joins you
 Save as: `images/act-ethan_diner.jpg`
 
 ```
 Two people in a Southern diner booth seen from behind, a basket of bread rolls and two glasses of water on the table between them, a jukebox glowing in the corner. Dark painterly gothic illustration, oil-painting texture, deep umber and near-black shadows with warm gold highlights, candlelight and drifting mist, small-town Southern Georgia, cinematic wide 16:9 composition, no text, no lettering, no logos, and no recognizable faces (people only as silhouettes or seen from behind). Wide 16:9 landscape.
 ```
 
-### 48. The four case files
+### 52. The four case files
 Save as: `images/act-files.jpg`
 
 ```
 Four case files laid side by side on a meeting table in a small trailer, four ID photographs of dark-haired women partly visible, a takeout container, warm lamplight. Dark painterly gothic illustration, oil-painting texture, deep umber and near-black shadows with warm gold highlights, candlelight and drifting mist, small-town Southern Georgia, cinematic wide 16:9 composition, no text, no lettering, no logos, and no recognizable faces (people only as silhouettes or seen from behind). Wide 16:9 landscape.
 ```
 
-### 49. Tell Ethan about Kendra
+### 53. Tell Ethan about Kendra
 Save as: `images/act-kendra.jpg`
 
 ```
 A woman and a man seated at a trailer meeting table, heads bowed over open files, lamplight, the man’s hand resting near hers, both in silhouette. Dark painterly gothic illustration, oil-painting texture, deep umber and near-black shadows with warm gold highlights, candlelight and drifting mist, small-town Southern Georgia, cinematic wide 16:9 composition, no text, no lettering, no logos, and no recognizable faces (people only as silhouettes or seen from behind). Wide 16:9 landscape.
 ```
 
-### 50. Abigail’s file
+### 54. Abigail’s file
 Save as: `images/act-abfile.jpg`
 
 ```
 A hand pulling a thin worn case folder from the bottom drawer of an old green filing cabinet, three yellowed pages, warm lamplight, trailer wood paneling. Dark painterly gothic illustration, oil-painting texture, deep umber and near-black shadows with warm gold highlights, candlelight and drifting mist, small-town Southern Georgia, cinematic wide 16:9 composition, no text, no lettering, no logos, and no recognizable faces (people only as silhouettes or seen from behind). Wide 16:9 landscape.
 ```
 
-### 51. The knock at the door
+### 55. The knock at the door
 Save as: `images/act-knock.jpg`
 
 ```
 A trailer sheriff’s office doorway crowded with two men in silhouette, a short stout man with thick glasses and a tall man in a suit, backlit by evening light, a woman at a desk holding a folder to her chest. Dark painterly gothic illustration, oil-painting texture, deep umber and near-black shadows with warm gold highlights, candlelight and drifting mist, small-town Southern Georgia, cinematic wide 16:9 composition, no text, no lettering, no logos, and no recognizable faces (people only as silhouettes or seen from behind). Wide 16:9 landscape.
 ```
 
-### 52. Mackenzie reads your hands
+### 56. Mackenzie reads your hands
 Save as: `images/act-mackenzie.jpg`
 
 ```
 Two hands held palms-up in candlelight above a small table, a chakra chart open beside them, lavender sprigs, soft gold light, two women seated facing each other in silhouette. Dark painterly gothic illustration, oil-painting texture, deep umber and near-black shadows with warm gold highlights, candlelight and drifting mist, small-town Southern Georgia, cinematic wide 16:9 composition, no text, no lettering, no logos, and no recognizable faces (people only as silhouettes or seen from behind). Wide 16:9 landscape.
 ```
 
-### 53. Gwyneth appears
+### 57. Gwyneth appears
 Save as: `images/act-gwyn.jpg`
 
 ```
 A pale translucent young woman standing between candle shelves, the flames showing through her, a woman in a dark suit raising a wrist-worn device that glows faintly. Dark painterly gothic illustration, oil-painting texture, deep umber and near-black shadows with warm gold highlights, candlelight and drifting mist, small-town Southern Georgia, cinematic wide 16:9 composition, no text, no lettering, no logos, and no recognizable faces (people only as silhouettes or seen from behind). Wide 16:9 landscape.
 ```
 
-### 54. Ethan calls at nine
+### 58. Ethan calls at nine
 Save as: `images/act-night.jpg`
 
 ```
