@@ -294,7 +294,7 @@
     $('clock').textContent = playing ? clockText() : '';
     var sh = $('btn-shield'); sh.hidden = !playing; sh.textContent = 'Shield: ' + (s && s.shield ? 'On' : 'Off'); sh.classList.toggle('on', !!(s && s.shield));
     $('btn-board').hidden = !playing; $('btn-menu').hidden = st.v === 'title';
-    var lb = $('btn-listen'); if (lb) { lb.hidden = !TTS || !playing; lb.textContent = 'Listen: ' + (st.listen ? 'On' : 'Off'); lb.classList.toggle('on', st.listen); lb.setAttribute('aria-pressed', st.listen ? 'true' : 'false'); }
+    var lb = $('btn-listen'); if (lb) { lb.hidden = !TTS; lb.textContent = 'Listen: ' + (st.listen ? 'On' : 'Off'); lb.classList.toggle('on', st.listen); lb.setAttribute('aria-pressed', st.listen ? 'true' : 'false'); }
   }
 
   function titleView() {
