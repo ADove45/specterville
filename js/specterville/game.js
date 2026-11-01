@@ -171,10 +171,10 @@
     var html = body(val(a.text, s));
     st.turn = true;
     say(val(a.text, s) + (a.choices && s.picks[aid] != null ? '\n\n' + a.choices[s.picks[aid]].reply : ''));
-    if (a.choices && s.picks[aid] == null) st.shown = { title: a.label, html: html, choices: a.choices, aid: aid, exit: a.exit };
+    if (a.choices && s.picks[aid] == null) st.shown = { title: a.label, html: html, choices: a.choices, aid: aid, exit: a.exit, leave: a.leave };
     else {
       if (a.choices) html += '<div class="reply">' + body(a.choices[s.picks[aid]].reply) + '</div>';
-      st.shown = { title: a.label, html: html, accuse: !!a.accuse, aid: aid, ci: a.choices ? s.picks[aid] : null, more: a.choices ? others(a, s.picks[aid]) : null, exit: a.exit };
+      st.shown = { title: a.label, html: html, accuse: !!a.accuse, aid: aid, ci: a.choices ? s.picks[aid] : null, more: a.choices ? others(a, s.picks[aid]) : null, exit: a.exit, leave: a.leave };
     }
     unlockCheck(); save(); render();
   }
@@ -183,7 +183,7 @@
     var s = st.s, a = findAction(pid, aid), c = a.choices[i], first = s.picks[aid] == null;
     st.turn = true; say(c.reply);
     if (first) { s.picks[aid] = i; if (c.fx) c.fx(s, api); }
-    st.shown = { title: a.label, html: first ? body(val(a.text, s)) + '<div class="reply">' + body(c.reply) + '</div>' : '<p class="said">' + fmt(c.label) + '</p>' + body(c.reply), aid: aid, ci: i, more: others(a, i), exit: a.exit };
+    st.shown = { title: a.label, html: first ? body(val(a.text, s)) + '<div class="reply">' + body(c.reply) + '</div>' : '<p class="said">' + fmt(c.label) + '</p>' + body(c.reply), aid: aid, ci: i, more: others(a, i), exit: a.exit, leave: a.leave };
     unlockCheck(); save(); render();
   }
   function chooseEvent(i) {
@@ -447,7 +447,7 @@
     if (d === 'continue') return resume();
     if (d === 'begin') { st.v = 'place'; return proceed(); }
     if (d === 'map') { st.v = 'map'; return render(); }
-    if (d === 'turn') { st.shown = null; st.turn = false; stopSay(); return render(); }
+    if (d === 'turn') { var lv = st.shown && st.shown.leave; st.shown = null; st.turn = !!lv; stopSay(); if (lv) st.v = 'map'; return render(); } // some branches end by leaving the place
     if (d === 'place') { st.v = 'place'; return render(); }
     if (d === 'board') return renderBoard();
     if (d === 'close') return closeBoard();

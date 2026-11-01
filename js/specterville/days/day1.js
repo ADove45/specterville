@@ -11,7 +11,7 @@
         { id: 'room', label: 'Search the room', clue: 'scent',
           text: 'You walk into the bedroom and immediately note the scent of candles and perfume. You suspect that maybe this woman did have a visitor the night before, and that this would not fit the profile of your four previous cases. You scan the room and make note of the cheap, feminine décor.' },
         { id: 'ethan_apt', label: 'Ethan Cole is in the doorway',
-          exit: 'Ethan is still standing in the doorway. Walk out past him.',
+          exit: 'Ethan is still standing in the doorway. Walk out past him and leave.', leave: true,
           text: function (s) {
             return (s.done.candle ? '@ethan “A candle from the Daylight Candle Shop.”\n\nHearing his voice, you take a shallow breath before quickly letting it out.\n\n' : 'Behind you, a voice you know. You take a shallow breath before quickly letting it out.\n\n') +
               'You turn as he strolls through the bedroom door. He wears laid-back local Southern clothes, faded jeans with a slightly tattered T-shirt and baseball cap, but there is no mistaking the city attitude in his walk. Ethan Cole.\n\nHis New York City swagger is enough to make a nun forget her vows just long enough to break them four or five times. He is six years older than you, but it looks good on him.\n\n@ethan “Hey, Audra. Wait up.”';
