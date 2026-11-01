@@ -385,9 +385,11 @@
 
   function render() {
     bar();
-    var v = st.v;
+    var v = st.v, old = st.turn && view.querySelector('.col'), leaf = null, box = null;
+    if (old) { box = { top: old.offsetTop, left: old.offsetLeft, width: old.offsetWidth, height: old.offsetHeight }; leaf = old.cloneNode(true); } // the page being turned away
     if (v === 'title') titleView(); else if (v === 'dayintro') dayIntroView(); else if (v === 'night') nightView(); else if (v === 'event') eventView(); else if (v === 'prologue') prologueView();
     else if (v === 'map') mapView(); else if (v === 'accuse') accuseView(); else if (v === 'ending') endingView(); else placeView();
+    if (leaf) { leaf.className = leaf.className.replace(/\b(turn|fade)\b/g, '') + ' leaf'; leaf.style.cssText = 'top:' + box.top + 'px;left:' + box.left + 'px;width:' + box.width + 'px;height:' + box.height + 'px;overflow:hidden'; view.appendChild(leaf); setTimeout(function () { if (leaf.parentNode) leaf.parentNode.removeChild(leaf); }, 900); }
     if (!$('panel').hidden) renderBoard();
     var sc = view.parentNode; if (sc && sc.scrollTo && v !== 'place') sc.scrollTo(0, 0);
   }
@@ -396,7 +398,7 @@
   function sayPro() { var p = (D.PROLOGUE || [])[st.pro]; if (p) say(p.text); }
   function prologueView() {
     var pages = D.PROLOGUE, p = pages[st.pro], last = st.pro >= pages.length - 1;
-    view.innerHTML = '<div class="col ' + turnClass() + '">' + art(p.art) + '<p class="eyebrow"><span>Prologue</span><span>Saturday night</span></p><h1 class="scene-title">' + esc(p.title) + '</h1><div class="scene">' + body(p.text) + '</div>' +
+    view.innerHTML = '<div class="col ' + turnClass() + '">' + art(p.art) + '<p class="eyebrow"><span>Prologue</span><span>' + esc(p.title.split(': ')[0]) + '</span></p><h1 class="scene-title">' + esc(p.title.indexOf(': ') > 0 ? p.title.split(': ').slice(1).join(': ') : p.title) + '</h1><div class="scene">' + body(p.text) + '</div>' +
       '<div class="cta-row"><button class="cta" type="button" data-do="pro-next">' + (last ? 'Begin Day One: Monday' : 'Turn the page') + '</button></div></div>';
   }
   function startNew() {
