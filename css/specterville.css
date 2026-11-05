@@ -152,3 +152,5 @@ button.clue:hover{border-color:var(--gold)}.clue.pick{border-color:var(--gold);b
 .clock.low .ticks i.gone{border-color:var(--line)}
 @keyframes tick{50%{opacity:.45}}
 @media(prefers-reduced-motion:reduce){.clock.low .ticks i.now{animation:none}}
+
+.act.here{border-color:var(--gold);background:#1f1710}

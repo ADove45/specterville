@@ -2,6 +2,7 @@
 (function () {
   var PLACES = {
     apartment: { name: 'Gwyneth Miller’s Apartment',
+      leaveAfter: 'ethan_apt',
       blurb: 'Half past noon. The air conditioner is off, and the Georgia heat sits on everything. You can hear country cops inevitably messing up the bedroom, which is now an official FBI crime scene.',
       actions: [
         { id: 'body', label: 'Examine the body', clue: 'burns',

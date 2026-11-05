@@ -161,7 +161,7 @@
   function findAction(pid, aid) { return places()[pid].actions.filter(function (x) { return x.id === aid; })[0]; }
   function runAction(pid, aid) {
     var s = st.s, a = findAction(pid, aid); if (!a) return;
-    st.hist = [];
+    if (st.shown && st.shown.aid) st.hist.push(snap()); else st.hist = []; // moving between pages here can be undone with Back
     var why = a.lock && a.lock(s);
     if (why) { st.shown = { title: a.label, html: '<p class="locked">' + esc(why) + '</p>' }; say(why); return render(); }
     if (a.specter && s.shield) {
@@ -360,20 +360,26 @@
   function turnClass() { var t = st.turn, b = st.back; st.turn = false; st.back = false; return b ? 'turnback' : t ? 'turn' : 'fade'; }
   function snap() { var o = {}; for (var k in st.shown) o[k] = st.shown[k]; if (o.pages) o.pages = o.pages.slice(); return o; } // lets Back return to the page before, with nothing replayed
   /* each decision is its own full page: picture, title, text, then the way on */
+  function actList(p) { // the choices at this place, shown on every page so there is no going back to a hub
+    var s = st.s;
+    return '<p class="sub">What do you do?</p><div class="acts">' + p.actions.filter(function (a) { return !a.show || a.show(s); }).map(function (a) {
+      var locked = a.lock && a.lock(s), done = s.done[a.id], here = st.shown && st.shown.aid === a.id;
+      return '<button class="act' + (done ? ' done' : '') + (locked ? ' lk' : '') + (a.specter ? ' spec' : '') + (here ? ' here' : '') + '" type="button" data-act="' + a.id + '">' + (a.specter ? '<em class="tagline">specter</em>' : '') + esc(a.label) + (done && !here ? '<span class="chk">seen</span>' : '') + '</button>';
+    }).join('') + '</div>';
+  }
+  function canLeave(p) { return !p.leaveAfter || st.s.done[p.leaveAfter]; } // some places are left only by a particular choice
+  function leaveRow(p) { return canLeave(p) ? '<div class="cta-row"><button class="cta ghost" type="button" data-do="map">Leave. Open the map</button></div>' : ''; }
   function decisionPage(p, sh, pic) {
     var h = '<div class="col ' + turnClass() + ' decision">' + art(pic) + '<div class="eyebrow"><span>' + esc(p.name) + '</span><span class="pov">Audra</span></div>' +
       '<h1 class="scene-title">' + esc(sh.title) + '</h1><div class="scene">' + sh.html + '</div>';
     if (sh.pages && sh.pages.length) h += '<div class="cta-row"><button class="cta" type="button" data-do="sub">Turn the page</button></div>';
-    else if (sh.choices) h += '<p class="sub">What do you say or do?</p><div class="choices">' + sh.choices.map(function (c, i) { return '<button class="choice" type="button" data-pick="' + i + '">' + fmt(c.label) + '</button>'; }).join('') + '</div>';
-    else if (sh.more && sh.more.length) {
-      var ch = findAction(st.s.loc, sh.aid).choices;
-      h += '<p class="sub">Or you could say</p><div class="choices">' + sh.more.map(function (i) { return '<button class="choice" type="button" data-pick="' + i + '">' + fmt(ch[i].label) + '</button>'; }).join('') + '</div>' +
-        '<div class="cta-row"><button class="cta ghost" type="button" data-do="turn">' + esc(sh.exit || 'Turn the page') + '</button></div>';
-    } else {
-      h += '<div class="cta-row">';
-      if (sh.hint) h += '<button class="cta" type="button" data-do="shield">Switch the shield off</button>';
-      if (sh.accuse) h += '<button class="cta" type="button" data-do="accuse">Make your accusation</button>';
-      h += '<button class="cta' + (sh.accuse || sh.hint ? ' ghost' : '') + '" type="button" data-do="turn">' + esc(sh.exit || 'Turn the page') + '</button></div>';
+    else if (sh.choices) h += '<p class="sub">What do you say or do?</p><div class="choices">' + sh.choices.map(function (c, i) { return '<button class="choice" type="button" data-pick="' + i + '">' + fmt(c.label) + '</button>'; }).join('') + '</div>' + actList(p) + leaveRow(p);
+    else if (sh.leave) h += '<div class="cta-row"><button class="cta" type="button" data-do="turn">' + esc(sh.exit || 'Leave') + '</button></div>'; // deciding to talk to him is the way out
+    else {
+      if (sh.hint || sh.accuse) {
+        h += '<div class="cta-row">' + (sh.hint ? '<button class="cta" type="button" data-do="shield">Switch the shield off</button>' : '') + (sh.accuse ? '<button class="cta" type="button" data-do="accuse">Make your accusation</button>' : '') + '</div>';
+      }
+      h += actList(p) + leaveRow(p);
     }
     h += '<div class="cta-row backrow"><button class="tool" type="button" data-do="back">\u2190 Back</button></div>';
     view.innerHTML = h + '</div>';
@@ -397,7 +403,7 @@
     view.innerHTML = '<div class="col ' + turnClass() + '">' + art(pic) + '<div class="eyebrow"><span>' + esc(clockText()) + '</span><span class="pov">Audra</span></div>' +
       '<h1 class="scene-title">' + esc(p.name) + '</h1><p class="blurb">' + fmt(p.blurb) + '</p>' + scene +
       '<p class="sub">What do you do?</p><div class="acts">' + acts + '</div>' +
-      '<div class="cta-row"><button class="cta" type="button" data-do="map">Leave. Open the map</button></div></div>';
+      leaveRow(p) + '</div>';
   }
 
   function render() {
@@ -418,13 +424,14 @@
     view.innerHTML = '<div class="col ' + turnClass() + '">' + art(p.art) + '<p class="eyebrow"><span>Prologue</span><span>' + esc(p.title.split(': ')[0]) + '</span></p><h1 class="scene-title">' + esc(p.title.indexOf(': ') > 0 ? p.title.split(': ').slice(1).join(': ') : p.title) + '</h1><div class="scene">' + body(p.text) + '</div>' +
       '<div class="cta-row">' + (st.pro > 0 ? '<button class="cta ghost" type="button" data-do="back">\u2190 Back</button>' : '') + '<button class="cta" type="button" data-do="pro-next">' + (last ? 'Begin Day One: Monday' : 'Turn the page') + '</button></div></div>';
   }
+  function live() { try { sessionStorage.setItem('sv-live', '1'); } catch (e) {} }
   function startNew() {
-    wipe(); st.s = fresh(); st.shown = null;
+    live(); wipe(); st.s = fresh(); st.shown = null;
     if (D.PROLOGUE && D.PROLOGUE.length) { st.pro = 0; st.s.pro = 0; save(); st.turn = true; st.v = 'prologue'; sayPro(); return render(); }
     startDay(0);
   }
   function resume() {
-    st.s = load(); var s = st.s; st.shown = null;
+    live(); st.s = load(); var s = st.s; st.shown = null;
     if (s.ended) { st.endPage = 0; st.v = 'ending'; sayEnding(); return render(); }
     if (s.final) return startAccuse();
     if (s.pro != null && D.PROLOGUE && s.pro < D.PROLOGUE.length) { st.pro = s.pro; st.v = 'prologue'; st.turn = false; return render(); }
@@ -488,5 +495,6 @@
   });
   document.addEventListener('keydown', function (e) { if (e.key === 'Escape' && !$('panel').hidden) closeBoard(); });
 
-  if (load() && !/[?&]title\b/.test(location.search)) resume(); else render(); // a refresh carries on where you were
+  var again = false; try { again = sessionStorage.getItem('sv-live') === '1'; } catch (e) {}
+  if (again && load() && !/[?&]title\b/.test(location.search)) resume(); else render(); // a refresh carries on where you were; a fresh visit begins at the title
 })();
