@@ -3,7 +3,7 @@
 (function () {
   var D = window.SV, SAVE = 'specterville-v2', BOOK_URL = 'https://www.amazon.com/dp/B09CLJ7HBB';
   var $ = function (id) { return document.getElementById(id); };
-  var view = $('view'), st = { raw: '', listen: false, turn: false, v: 'title', s: null, shown: null, ev: null, evStage: 0, acc: null, endPage: 0, board: { pick: [] } };
+  var view = $('view'), st = { raw: '', listen: false, turn: false, v: 'title', s: null, shown: null, ev: null, evStage: 0, acc: null, endPage: 0, board: { pick: [] }, hist: [], back: false };
 
   var esc = function (t) { return String(t).replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;'); };
   var fmt = function (t) { return esc(t).replace(/\*([^*]+)\*/g, '<em>$1</em>'); };
@@ -160,6 +160,7 @@
   function findAction(pid, aid) { return places()[pid].actions.filter(function (x) { return x.id === aid; })[0]; }
   function runAction(pid, aid) {
     var s = st.s, a = findAction(pid, aid); if (!a) return;
+    st.hist = [];
     var why = a.lock && a.lock(s);
     if (why) { st.shown = { title: a.label, html: '<p class="locked">' + esc(why) + '</p>' }; say(why); return render(); }
     if (a.specter && s.shield) {
@@ -182,6 +183,7 @@
   function others(a, i) { return a.choices.map(function (c, n) { return n; }).filter(function (n) { return n !== i; }); }
   function choose(pid, aid, i) { // the first thing you say counts; the other choices can still be tried, and only change what you hear
     var s = st.s, a = findAction(pid, aid), c = a.choices[i], first = s.picks[aid] == null;
+    if (st.shown) st.hist.push(snap());
     st.turn = true; say(c.reply);
     if (first) { s.picks[aid] = i; if (c.fx) c.fx(s, api); }
     st.shown = { title: a.label, html: first ? body(val(a.text, s)) + '<div class="reply">' + body(c.reply) + '</div>' : '<p class="said">' + fmt(c.label) + '</p>' + body(c.reply), aid: aid, ci: i, more: others(a, i), exit: a.exit, leave: a.leave };
@@ -214,7 +216,7 @@
   function renderMenu() {
     var h = '<div class="panel-head"><h2>Menu</h2><button class="tool" type="button" data-do="close">Close</button></div>';
     h += '<p class="sub">Read aloud</p>' + (TTS ? '<div class="cta-row"><button class="cta" type="button" data-do="listen">Listen: ' + (st.listen ? 'On' : 'Off') + '</button></div>' + voiceHtml() : '<p class="hint">This browser has no read-aloud voices. Open the game in Chrome, Edge or Safari, outside of an app, to hear it read.</p>');
-    h += '<div class="cta-row"><button class="cta ghost" type="button" data-do="totitle">Back to the title screen</button></div>';
+    h += '<div class="cta-row"><button class="cta ghost" type="button" data-do="totitle">Back to the title screen</button><button class="cta ghost" type="button" data-do="restart">Start over</button></div>';
     $('panel-in').innerHTML = h; $('panel').hidden = false;
   }
   function renderBoard() {
@@ -349,7 +351,8 @@
       '<div class="cta-row"><button class="cta" type="button" data-do="place">Back to ' + esc(places()[s.loc].name) + '</button></div></div>';
   }
 
-  function turnClass() { var t = st.turn; st.turn = false; return t ? 'turn' : 'fade'; }
+  function turnClass() { var t = st.turn, b = st.back; st.turn = false; st.back = false; return b ? 'turnback' : t ? 'turn' : 'fade'; }
+  function snap() { var o = {}; for (var k in st.shown) o[k] = st.shown[k]; if (o.pages) o.pages = o.pages.slice(); return o; } // lets Back return to the page before, with nothing replayed
   /* each decision is its own full page: picture, title, text, then the way on */
   function decisionPage(p, sh, pic) {
     var h = '<div class="col ' + turnClass() + ' decision">' + art(pic) + '<div class="eyebrow"><span>' + esc(p.name) + '</span><span class="pov">Audra</span></div>' +
@@ -366,6 +369,7 @@
       if (sh.accuse) h += '<button class="cta" type="button" data-do="accuse">Make your accusation</button>';
       h += '<button class="cta' + (sh.accuse || sh.hint ? ' ghost' : '') + '" type="button" data-do="turn">' + esc(sh.exit || 'Turn the page') + '</button></div>';
     }
+    h += '<div class="cta-row backrow"><button class="tool" type="button" data-do="back">\u2190 Back</button></div>';
     view.innerHTML = h + '</div>';
   }
   function placeView() {
@@ -406,7 +410,7 @@
   function prologueView() {
     var pages = D.PROLOGUE, p = pages[st.pro], last = st.pro >= pages.length - 1;
     view.innerHTML = '<div class="col ' + turnClass() + '">' + art(p.art) + '<p class="eyebrow"><span>Prologue</span><span>' + esc(p.title.split(': ')[0]) + '</span></p><h1 class="scene-title">' + esc(p.title.indexOf(': ') > 0 ? p.title.split(': ').slice(1).join(': ') : p.title) + '</h1><div class="scene">' + body(p.text) + '</div>' +
-      '<div class="cta-row"><button class="cta" type="button" data-do="pro-next">' + (last ? 'Begin Day One: Monday' : 'Turn the page') + '</button></div></div>';
+      '<div class="cta-row">' + (st.pro > 0 ? '<button class="cta ghost" type="button" data-do="back">\u2190 Back</button>' : '') + '<button class="cta" type="button" data-do="pro-next">' + (last ? 'Begin Day One: Monday' : 'Turn the page') + '</button></div></div>';
   }
   function startNew() {
     wipe(); st.s = fresh(); st.shown = null;
@@ -451,8 +455,14 @@
     if (d === 'continue') return resume();
     if (d === 'begin') { st.v = 'place'; return proceed(); }
     if (d === 'map') { st.v = 'map'; return render(); }
-    if (d === 'sub') { var nx = st.shown.pages.shift(); st.shown.html = body(nx); st.turn = true; stopSay(); say(nx + (!st.shown.pages.length && st.shown.ci != null ? '' : '')); return render(); }
-    if (d === 'turn') { var lv = st.shown && st.shown.leave; st.shown = null; st.turn = !!lv; stopSay(); if (lv) st.v = 'map'; return render(); } // some branches end by leaving the place
+    if (d === 'sub') { st.hist.push(snap()); var nx = st.shown.pages.shift(); st.shown.html = body(nx); st.turn = true; stopSay(); say(nx + (!st.shown.pages.length && st.shown.ci != null ? '' : '')); return render(); }
+    if (d === 'back') {
+      st.back = true; stopSay();
+      if (st.v === 'prologue') { if (st.pro > 0) { st.pro -= 1; st.s.pro = st.pro; save(); } return render(); }
+      st.shown = st.hist.length ? st.hist.pop() : null; return render();
+    }
+    if (d === 'restart') { if (window.confirm('Start the whole case over from the prologue? Your saved progress will be lost.')) { closeBoard(); stopSay(); startNew(); } return; }
+    if (d === 'turn') { st.hist = []; var lv = st.shown && st.shown.leave; st.shown = null; st.turn = !!lv; stopSay(); if (lv) st.v = 'map'; return render(); } // some branches end by leaving the place
     if (d === 'place') { st.v = 'place'; return render(); }
     if (d === 'board') return renderBoard();
     if (d === 'close') return closeBoard();

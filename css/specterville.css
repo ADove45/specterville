@@ -124,7 +124,10 @@ button.clue:hover{border-color:var(--gold)}.clue.pick{border-color:var(--gold);b
 .leaf::after{content:"";position:absolute;inset:0;pointer-events:none;background:linear-gradient(270deg,rgba(0,0,0,.7),rgba(0,0,0,0) 55%);animation:leafshade .8s ease-in both}
 @keyframes leafaway{0%{transform:perspective(1500px) rotateY(0);opacity:1}70%{opacity:1}100%{transform:perspective(1500px) rotateY(-115deg);opacity:0}}
 @keyframes leafshade{from{opacity:0}to{opacity:1}}
-@media(prefers-reduced-motion:reduce){.col.turn{animation:none}.leaf{display:none}}
+.col.turnback{transform-origin:left center;animation:pageback .7s cubic-bezier(.25,.7,.2,1) both}
+@keyframes pageback{0%{transform:perspective(1500px) rotateY(-78deg);opacity:.2}55%{opacity:1}100%{transform:perspective(1500px) rotateY(0);opacity:1}}
+.backrow{margin-top:.2rem}
+@media(prefers-reduced-motion:reduce){.col.turn,.col.turnback{animation:none}.leaf{display:none}}
 
 /* read-aloud settings */
 .voices{display:grid;gap:.6rem;grid-template-columns:1fr 1fr}
