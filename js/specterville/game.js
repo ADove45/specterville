@@ -116,7 +116,7 @@
 
   /* ---------- days, events ---------- */
   function startDay(i) {
-    var s = st.s; s.day = i; s.slot = 0; s.loc = D.DAYS[i].start; s.visited = {}; s.visited[s.loc] = 1; s.ending = false; s.pendingEv = null; st.shown = null; st.turn = true;
+    var s = st.s; s.day = i; s.slot = 0; s.loc = D.DAYS[i].start; s.visited = {}; s.visited[s.loc] = 1; s.ending = false; s.atNight = false; s.pendingEv = null; st.shown = null; st.turn = true;
     var copy = clone(s); delete copy.snap; s.snap = JSON.stringify(copy);
     unlockCheck(); save(); st.v = 'dayintro'; say(D.DAYS[i].intro); render();
   }
@@ -151,7 +151,7 @@
   function finishDay() {
     var s = st.s; s.ending = false;
     if (st.s.day >= LAST) { s.final = true; save(); return startAccuse(); }
-    st.v = day().night ? 'night' : 'next'; save();
+    st.v = day().night ? 'night' : 'next'; s.atNight = st.v === 'night'; save();
     if (st.v === 'next') return startDay(s.day + 1);
     say(day().night); render();
   }
@@ -410,13 +410,15 @@
   }
   function startNew() {
     wipe(); st.s = fresh(); st.shown = null;
-    if (D.PROLOGUE && D.PROLOGUE.length) { st.pro = 0; st.turn = true; st.v = 'prologue'; sayPro(); return render(); }
+    if (D.PROLOGUE && D.PROLOGUE.length) { st.pro = 0; st.s.pro = 0; save(); st.turn = true; st.v = 'prologue'; sayPro(); return render(); }
     startDay(0);
   }
   function resume() {
     st.s = load(); var s = st.s; st.shown = null;
     if (s.ended) { st.endPage = 0; st.v = 'ending'; sayEnding(); return render(); }
     if (s.final) return startAccuse();
+    if (s.pro != null && D.PROLOGUE && s.pro < D.PROLOGUE.length) { st.pro = s.pro; st.v = 'prologue'; st.turn = false; return render(); }
+    if (s.atNight && day().night) { st.v = 'night'; st.turn = false; return render(); }
     if (s.pendingEv) { var e = (day().events || []).filter(function (x) { return x.id === s.pendingEv; })[0]; if (e) return showEvent(e, true); }
     st.v = 'place'; render();
   }
@@ -444,7 +446,7 @@
     if (!d) return;
     if (d === 'listen') { toggleListen(); return renderBoard(); }
     if (d === 'totitle') { st.v = 'title'; closeBoard(); stopSay(); return render(); }
-    if (d === 'pro-next') { st.pro += 1; st.turn = true; stopSay(); if (st.pro >= D.PROLOGUE.length) return startDay(0); sayPro(); return render(); }
+    if (d === 'pro-next') { st.pro += 1; st.turn = true; stopSay(); if (st.pro >= D.PROLOGUE.length) { st.s.pro = null; return startDay(0); } st.s.pro = st.pro; save(); sayPro(); return render(); }
     if (d === 'new') return startNew();
     if (d === 'continue') return resume();
     if (d === 'begin') { st.v = 'place'; return proceed(); }
@@ -470,5 +472,5 @@
   });
   document.addEventListener('keydown', function (e) { if (e.key === 'Escape' && !$('panel').hidden) closeBoard(); });
 
-  render();
+  if (load() && !/[?&]title\b/.test(location.search)) resume(); else render(); // a refresh carries on where you were
 })();
