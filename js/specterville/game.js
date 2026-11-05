@@ -168,14 +168,15 @@
     }
     var first = !s.done[aid]; s.done[aid] = 1;
     if (first) { if (a.fx) a.fx(s, api); [].concat(a.clue || []).forEach(function (c) { addClue(s, c); }); }
-    var html = body(val(a.text, s));
+    var raw = val(a.text, s), parts = raw.split(/\n\n===\n\n/), html = body(parts[0]), more = parts.slice(1); // "===" in a scene's text starts a new page
     st.turn = true;
-    say(val(a.text, s) + (a.choices && s.picks[aid] != null ? '\n\n' + a.choices[s.picks[aid]].reply : ''));
+    say(parts[0] + (!more.length && a.choices && s.picks[aid] != null ? '\n\n' + a.choices[s.picks[aid]].reply : ''));
     if (a.choices && s.picks[aid] == null) st.shown = { title: a.label, html: html, choices: a.choices, aid: aid, exit: a.exit, leave: a.leave };
     else {
       if (a.choices) html += '<div class="reply">' + body(a.choices[s.picks[aid]].reply) + '</div>';
       st.shown = { title: a.label, html: html, accuse: !!a.accuse, aid: aid, ci: a.choices ? s.picks[aid] : null, more: a.choices ? others(a, s.picks[aid]) : null, exit: a.exit, leave: a.leave };
     }
+    if (more.length && st.shown) st.shown.pages = more;
     unlockCheck(); save(); render();
   }
   function others(a, i) { return a.choices.map(function (c, n) { return n; }).filter(function (n) { return n !== i; }); }
@@ -353,7 +354,8 @@
   function decisionPage(p, sh, pic) {
     var h = '<div class="col ' + turnClass() + ' decision">' + art(pic) + '<div class="eyebrow"><span>' + esc(p.name) + '</span><span class="pov">Audra</span></div>' +
       '<h1 class="scene-title">' + esc(sh.title) + '</h1><div class="scene">' + sh.html + '</div>';
-    if (sh.choices) h += '<p class="sub">What do you say or do?</p><div class="choices">' + sh.choices.map(function (c, i) { return '<button class="choice" type="button" data-pick="' + i + '">' + fmt(c.label) + '</button>'; }).join('') + '</div>';
+    if (sh.pages && sh.pages.length) h += '<div class="cta-row"><button class="cta" type="button" data-do="sub">Turn the page</button></div>';
+    else if (sh.choices) h += '<p class="sub">What do you say or do?</p><div class="choices">' + sh.choices.map(function (c, i) { return '<button class="choice" type="button" data-pick="' + i + '">' + fmt(c.label) + '</button>'; }).join('') + '</div>';
     else if (sh.more && sh.more.length) {
       var ch = findAction(st.s.loc, sh.aid).choices;
       h += '<p class="sub">Or you could say</p><div class="choices">' + sh.more.map(function (i) { return '<button class="choice" type="button" data-pick="' + i + '">' + fmt(ch[i].label) + '</button>'; }).join('') + '</div>' +
@@ -447,6 +449,7 @@
     if (d === 'continue') return resume();
     if (d === 'begin') { st.v = 'place'; return proceed(); }
     if (d === 'map') { st.v = 'map'; return render(); }
+    if (d === 'sub') { var nx = st.shown.pages.shift(); st.shown.html = body(nx); st.turn = true; stopSay(); say(nx + (!st.shown.pages.length && st.shown.ci != null ? '' : '')); return render(); }
     if (d === 'turn') { var lv = st.shown && st.shown.leave; st.shown = null; st.turn = !!lv; stopSay(); if (lv) st.v = 'map'; return render(); } // some branches end by leaving the place
     if (d === 'place') { st.v = 'place'; return render(); }
     if (d === 'board') return renderBoard();
