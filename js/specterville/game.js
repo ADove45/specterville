@@ -111,6 +111,7 @@
     st.s.slot += 1; st.s.loc = to; st.s.visited[to] = 1; st.shown = null; st.turn = true; stopSay();
     unlockCheck();
     if (st.s.slot >= day().slots.length) { st.s.ending = true; }
+    else if (slotsLeft() <= 2) toast(slotsLeft() === 1 ? 'The last stop of the day. Make it count.' : 'Time is running down. Two stops left today.');
     save(); proceed();
   }
 
@@ -303,7 +304,12 @@
   }
   function bar() {
     var s = st.s, playing = s && st.v !== 'title' && st.v !== 'prologue';
-    $('clock').textContent = playing ? clockText() : '';
+    var ck = $('clock');
+    if (playing) { // the day's hours as marks that fill in as time runs down
+      var d = day(), n = d.slots.length, cur = Math.min(s.slot, n - 1), left = n - s.slot;
+      ck.innerHTML = esc(clockText()) + ' <span class="ticks" aria-hidden="true" title="' + Math.max(left, 0) + ' stops left today">' + d.slots.map(function (t, i) { return '<i class="' + (i < s.slot ? 'gone' : i === cur ? 'now' : '') + '"></i>'; }).join('') + '</span>';
+      ck.classList.toggle('low', left <= 2); ck.setAttribute('aria-label', clockText() + ', ' + Math.max(left, 0) + ' stops left today');
+    } else { ck.textContent = ''; ck.classList.remove('low'); }
     var sh = $('btn-shield'); sh.hidden = !playing; sh.textContent = 'Shield: ' + (s && s.shield ? 'On' : 'Off'); sh.classList.toggle('on', !!(s && s.shield));
     $('btn-board').hidden = !playing; $('btn-menu').hidden = false;
     var lb = $('btn-listen'); if (lb) { lb.hidden = false; lb.textContent = 'Listen: ' + (st.listen ? 'On' : 'Off'); lb.classList.toggle('on', st.listen); lb.setAttribute('aria-pressed', st.listen ? 'true' : 'false'); }

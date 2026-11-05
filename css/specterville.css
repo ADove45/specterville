@@ -143,3 +143,12 @@ button.clue:hover{border-color:var(--gold)}.clue.pick{border-color:var(--gold);b
 .page .col{position:relative;z-index:1}
 
 .said{color:var(--gold);font-style:italic;border-left:2px solid var(--gold);padding-left:.8rem}
+
+.clock .ticks{display:inline-flex;gap:3px;margin-left:.6rem;vertical-align:middle}
+.clock .ticks i{display:block;width:7px;height:13px;border:1px solid var(--gold);border-radius:2px}
+.clock .ticks i.gone{background:var(--line);border-color:var(--line);opacity:.5}
+.clock .ticks i.now{background:var(--gold);box-shadow:0 0 6px #d4a574aa}
+.clock.low{color:var(--red)}.clock.low .ticks i{border-color:var(--red)}.clock.low .ticks i.now{background:var(--red);box-shadow:0 0 8px #d98a7acc;animation:tick 1.4s ease-in-out infinite}
+.clock.low .ticks i.gone{border-color:var(--line)}
+@keyframes tick{50%{opacity:.45}}
+@media(prefers-reduced-motion:reduce){.clock.low .ticks i.now{animation:none}}
