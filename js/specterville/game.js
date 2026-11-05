@@ -164,7 +164,7 @@
     if (why) { st.shown = { title: a.label, html: '<p class="locked">' + esc(why) + '</p>' }; say(why); return render(); }
     if (a.specter && s.shield) {
       if (!s.done['flare_' + aid]) { s.done['flare_' + aid] = 1; s.trust.specters -= 1; }
-      st.shown = { title: a.label, html: '<p class="flare">' + esc(D.FLARE) + '</p>', hint: true }; say(D.FLARE); save(); return render();
+      st.shown = { title: a.label, html: '<p class="flare">' + esc(D.FLARE) + '</p>', hint: true, aid: aid }; say(D.FLARE); save(); return render();
     }
     var first = !s.done[aid]; s.done[aid] = 1;
     if (first) { if (a.fx) a.fx(s, api); [].concat(a.clue || []).forEach(function (c) { addClue(s, c); }); }
@@ -422,7 +422,7 @@
     var snap = st.s.snap; if (!snap) return startNew();
     st.s = JSON.parse(snap); st.s.snap = snap; st.s.wrong = 0; st.s.ended = null; st.s.final = false; st.v = 'dayintro'; save(); render();
   }
-  function toggleShield() { st.s.shield = !st.s.shield; toast('Specter shield ' + (st.s.shield ? 'on. Specters cannot come near you.' : 'off. Specters can approach, and speak.')); save(); if (st.shown && st.shown.hint && !st.s.shield) st.shown = null; render(); }
+  function toggleShield() { st.s.shield = !st.s.shield; toast('Specter shield ' + (st.s.shield ? 'on. Specters cannot come near you.' : 'off. Specters can approach, and speak.')); save(); if (st.shown && st.shown.hint && !st.s.shield) { var again = st.shown.aid; st.shown = null; if (again) return runAction(st.s.loc, again); } render(); }
 
   document.addEventListener('click', function (e) {
     var t = e.target.closest ? e.target.closest('button,a') : null; if (!t || t.disabled) return;
